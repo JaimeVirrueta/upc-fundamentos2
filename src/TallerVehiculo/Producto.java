@@ -7,16 +7,18 @@ public class Producto {
     Screen sc = new Screen();
     private static final ArrayList<Producto> lista = new ArrayList<>();
     private int codigo;
+    private String sku;
     private String nombre;
     private Double precio;
 
     public Producto() {
     }
 
-    public Producto( String nombre, Double precio) {
+    public Producto( String nombre, String sku, Double precio) {
         this.setCodigo();
-        this.nombre = nombre;
-        this.precio = precio;
+        this.setNombre(nombre);
+        this.setSku(sku);
+        this.setPrecio(precio);
     }
 
     public int getCodigo() {
@@ -26,6 +28,20 @@ public class Producto {
     public void setCodigo() {
 
         this.codigo = lista.size() + 1;
+    }
+
+    public String getSku() {
+        return sku;
+    }
+
+    public void setSku(String nombre) {
+        this.sku = nombre;
+    }
+
+    public String inputSku() {
+        String sku = sc.getString("Ingrese el código SKU: ");
+
+        return this.validarSku(sku);
     }
 
     public String getNombre() {
@@ -53,9 +69,10 @@ public class Producto {
     }
 
     public String toString() {
-        return sc.getVerde("Código: ")  + codigo
-                + sc.getVerde(", Nombre: ") + nombre
-                + sc.getVerde(", Precio: ") + precio;
+        return sc.getVerde("Código: ")  + this.getCodigo()
+                + sc.getVerde(", SKU: ") + this.getSku()
+                + sc.getVerde(", Nombre: ") + this.getNombre()
+                + sc.getVerde(", Precio: ") + this.getPrecio();
     }
 
     public void IniciarMenu() {
@@ -94,9 +111,10 @@ public class Producto {
     public void crear(){
         sc.printTitulo("Opción 1.1: Creación de Producto");
         String nombre = this.inputNombre();
+        String sku = this.inputSku();
         double precio = this.inputPrecio();
 
-        Producto nuevoProducto = new Producto(nombre, precio);
+        Producto nuevoProducto = new Producto(nombre, sku, precio);
         this.lista.add(nuevoProducto);
 
         sc.printCorrecto("Producto agregado correctamente");
@@ -118,7 +136,7 @@ public class Producto {
         sc.printTitulo("Opción 1.3: Gestión de Producto");
         int codigo = sc.getInt("Ingrese el código del producto a actualizar: ");
 
-        int indice = buscarPorCodigo(codigo);
+        int indice = buscar(codigo);
         if (indice != -1) {
             Producto producto = lista.get(indice);
 
@@ -126,14 +144,12 @@ public class Producto {
             sc.print(producto.toString());
 
             String nombre = this.inputNombre();
+            String sku = this.inputSku();
             double precio = this.inputPrecio();
 
-            if (!nombre.equalsIgnoreCase(producto.getNombre())) {
-                producto.setNombre(nombre);
-            }
-            if (precio != producto.getPrecio()) {
-                producto.setPrecio(precio);
-            }
+            producto.setNombre(nombre);
+            producto.setSku(sku);
+            producto.setPrecio(precio);
 
             sc.printCorrecto("Producto actualizado correctamente");
         } else {
@@ -145,7 +161,7 @@ public class Producto {
         sc.printTitulo("Opción 1.4: Eliminación de Producto");
         int codigo = sc.getInt("Ingrese el código del producto a eliminar: ");
 
-        int indice = buscarPorCodigo(codigo);
+        int indice = buscar(codigo);
         if (indice != -1) {
             Producto producto = this.lista.get(indice);
 
@@ -162,13 +178,21 @@ public class Producto {
     }
 
     public void IniciarData() {
-        Producto producto1 = new Producto("Aceite Liquimoly 5W30", 250.0);
+        Producto producto1 = new Producto("Aceite Liquimoly 5W30", "ACT001", 250.0);
         lista.add(producto1);
-        Producto producto2 = new Producto("Filtro de aire de motor", 20.0);
+        Producto producto2 = new Producto("Filtro de aire de motor", "FLT001", 20.0);
         lista.add(producto2);
+        Producto producto3 = new Producto("Filtro de aceite de motor", "FLT002", 50.0);
+        lista.add(producto3);
+        Producto producto4 = new Producto("Bujias Bosh", "BUJ001", 50.0);
+        lista.add(producto4);
+        Producto producto5 = new Producto("Bujias TORCH", "BUJ002", 50.0);
+        lista.add(producto5);
+        Producto producto6 = new Producto("Filtro de aire de cabina", "FLT003", 20.0);
+        lista.add(producto6);
     }
 
-    private int buscarPorCodigo(int codigo) {
+    private int buscar(int codigo) {
         for (int i = 0; i < lista.size(); i++) {
             Producto producto = lista.get(i);
             if (producto.getCodigo() == codigo) {
@@ -177,5 +201,32 @@ public class Producto {
         }
 
         return -1; // No se encontró el producto
+    }
+
+    private int buscar(String codigo) {
+        for (int i = 0; i < lista.size(); i++) {
+            Producto producto = lista.get(i);
+            if (producto.getSku().equalsIgnoreCase(codigo)) {
+                return i; // Se encontró el producto, se devuelve el índice
+            }
+        }
+
+        return -1; // No se encontró el producto
+    }
+
+    private String validarSku(String sku) {
+        boolean salir = false;
+        while (!salir) {
+            int indice = buscar(sku);
+            if (indice != -1) {
+                sc.printAlerta("El SKU del producto ya existe");
+
+                sku = this.inputSku();
+            } else {
+                salir = true;
+            }
+        }
+
+        return sku;
     }
 }
