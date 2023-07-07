@@ -1,27 +1,32 @@
 package TallerVehiculo;
+import TallerVehiculo.Services.Screen;
+
 import java.util.Scanner;
 
 public class Main {
+
     public static void main(String[] args) {
+        Producto producto = new Producto();
+        Screen sc = new Screen();
+
+        sc.printTitulo("Bienvenido al Gestor del Taller");
+        sc.printCorrecto("===============================");
+
         String codigo;
-        String nombre;
-        Double precio;
-        Scanner sc = new Scanner(System.in);
         boolean salir = false;
+
         while (!salir) {
-            System.out.println("1. Producto");
-            System.out.println("2. Mecanico");
-            System.out.println("3. Bahia");
-            System.out.println("4. Orden de Servicio");
-            System.out.println("5. Salir");
-            System.out.print("Ingrese una opción: ");
-            int opcion = sc.nextInt();
-            sc.nextLine(); // Consumir el salto de línea después de leer el entero
+            sc.printTitulo("Menú Principal");
+            sc.printSubtitulo("1. Producto");
+            sc.printSubtitulo("2. Mecanico");
+            sc.printSubtitulo("3. Bahia");
+            sc.printSubtitulo("4. Orden de Servicio");
+            sc.printSubtitulo("5. Salir");
+            int opcion = sc.getInt("   Ingrese una opción: ");
 
             switch (opcion) {
-
                 case 1:
-                    Producto.ejecutarProducto();
+                    producto.IniciarMenu();
                     break;
                 case 2:
                     Mecanico.ejecutarMecanico();
@@ -35,8 +40,12 @@ public class Main {
                 case 5:
                     salir = true;
                     break;
+                case 9:
+                    producto.IniciarData();
+                    sc.printCorrecto("Data Inicializada");
+                    break;
                 default:
-                    System.out.println("Opción inválida");
+                    sc.printAlerta("Opción inválida");
             }
         }
     }
