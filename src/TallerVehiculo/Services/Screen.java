@@ -17,7 +17,12 @@ public class Screen {
     }
 
     public void printSubtitulo(String texto){
-        System.out.println("\u001B[32m" + texto + "\u001B[0m");
+        System.out.println(this.getVerde(texto));
+    }
+
+
+    public String getVerde(String texto){
+        return "\u001B[32m" + texto + "\u001B[0m";
     }
 
     public void printAlerta(String texto){
