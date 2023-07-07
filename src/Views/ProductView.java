@@ -143,20 +143,6 @@ public class ProductView extends View{
         } catch (Exception e) {
             sc.printAlerta("Producto no encontrado");
         }
-/*
-        int index = this.controller.getById(codigo);
-        if (index != -1) {
-            Product product = this.controller.getByIndex(index);
-
-            sc.printCorrecto("Producto encontrado:");
-            sc.print(this.toString(product));
-
-            this.lista.remove(indice);
-
-            sc.printCorrecto("Producto eliminado correctamente");
-        } else {
-            sc.printAlerta("Producto no encontrado");
-        }*/
     }
 
     @Override

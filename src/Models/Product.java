@@ -51,5 +51,4 @@ public class Product extends Model {
         return -1;
     }
 
-
 }

@@ -41,6 +41,7 @@ public class ProductController extends Controller {
         return product;
     }
 
+    @Override
     public Product get(int id) {
         int index = this.getById(id);
 

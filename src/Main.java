@@ -1,10 +1,12 @@
 import Controllers.ProductController;
+import Controllers.ProfessionalController;
 import Models.Bahia;
-import Models.Technical;
+import Models.Professional;
 import Models.OrdenServicio;
 import Models.Product;
 import Services.Screen;
 import Views.ProductView;
+import Views.ProfessionalView;
 
 public class Main {
 
@@ -13,7 +15,10 @@ public class Main {
         ProductView productView = new ProductView();
         ProductController productController = new ProductController(product, productView);
 
-        Technical technical = new Technical();
+        Professional professional = new Professional();
+        ProfessionalView professionalView = new ProfessionalView();
+        ProfessionalController professionalController = new ProfessionalController(professional, professionalView);
+
         Screen sc = new Screen();
 
         sc.printTitulo("Bienvenido al Gestor del Taller");
@@ -24,33 +29,33 @@ public class Main {
 
         while (!salir) {
             sc.printTitulo("Menú Principal");
-            sc.printSubtitulo("1. Producto");
-            sc.printSubtitulo("2. Mecanico");
-            sc.printSubtitulo("3. Bahia");
-            sc.printSubtitulo("4. Orden de Servicio");
+            sc.printSubtitulo("1. Gestión de Órdenes");;
+            sc.printSubtitulo("2. Gestión de Productos");
+            sc.printSubtitulo("3. Gestión de Profesionales");
+            sc.printSubtitulo("4. Gestión de Bahias");
             sc.printSubtitulo("5. Salir");
             int opcion = sc.getInt("   Ingrese una opción: ");
 
             switch (opcion) {
                 case 1:
-                    productController.initializeMenu();
+                    OrdenServicio.ejecutarOrdenServicio();
                     break;
                 case 2:
-                    technical.iniciarMenu();
+                    productController.initializeMenu();
                     break;
                 case 3:
-                    Bahia.ejecutarBahia();
+                    professionalController.initializeMenu();
                     break;
                 case 4:
-                    OrdenServicio.ejecutarOrdenServicio();
+                    Bahia.ejecutarBahia();
                     break;
                 case 5:
                     salir = true;
                     break;
                 case 9:
                     productController.initData();
-                    technical.iniciarData();
-                    sc.printCorrecto("Data Inicializada");
+                    professionalController.initData();
+                    sc.printCorrecto("   Data Inicializada");
                     break;
                 default:
                     sc.printAlerta("Opción inválida");
