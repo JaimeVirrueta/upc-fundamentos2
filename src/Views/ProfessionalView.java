@@ -2,7 +2,6 @@ package Views;
 
 import Controllers.ProfessionalController;
 import Models.Model;
-import Models.Product;
 import Models.Professional;
 
 public class ProfessionalView extends View{

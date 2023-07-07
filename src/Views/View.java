@@ -2,7 +2,6 @@ package Views;
 
 import Controllers.Controller;
 import Models.Model;
-import Models.Product;
 import Services.Screen;
 
 abstract public class View {

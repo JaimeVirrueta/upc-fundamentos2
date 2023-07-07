@@ -1,10 +1,12 @@
+import Controllers.BayController;
 import Controllers.ProductController;
 import Controllers.ProfessionalController;
-import Models.Bahia;
+import Models.Bay;
 import Models.Professional;
 import Models.OrdenServicio;
 import Models.Product;
 import Services.Screen;
+import Views.BayView;
 import Views.ProductView;
 import Views.ProfessionalView;
 
@@ -18,6 +20,10 @@ public class Main {
         Professional professional = new Professional();
         ProfessionalView professionalView = new ProfessionalView();
         ProfessionalController professionalController = new ProfessionalController(professional, professionalView);
+
+        Bay bay = new Bay();
+        BayView bayView = new BayView();
+        BayController bayController = new BayController(bay, bayView);
 
         Screen sc = new Screen();
 
@@ -47,7 +53,7 @@ public class Main {
                     professionalController.initializeMenu();
                     break;
                 case 4:
-                    Bahia.ejecutarBahia();
+                    bayController.initializeMenu();
                     break;
                 case 5:
                     salir = true;
@@ -55,6 +61,7 @@ public class Main {
                 case 9:
                     productController.initData();
                     professionalController.initData();
+                    bayController.initData();
                     sc.printCorrecto("   Data Inicializada");
                     break;
                 default:
