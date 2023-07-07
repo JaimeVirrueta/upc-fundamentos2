@@ -100,7 +100,7 @@ public class Mecanico {
                     salir = true;
                     break;
                 default:
-                    System.out.println("Opción inválida");
+                    sc.printAlerta("Opción inválida");
             }
         }
     }
