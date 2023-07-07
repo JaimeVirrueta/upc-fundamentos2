@@ -3,11 +3,11 @@ package Controllers;
 import Models.Model;
 import Models.Product;
 import Views.ProductView;
-
 import java.util.ArrayList;
 
 public class ProductController extends Controller {
 
+    private ArrayList<Product> products = new ArrayList<>();
     private Product model;
     private ProductView view;
 
@@ -22,21 +22,16 @@ public class ProductController extends Controller {
     }
 
     public ArrayList<Product> getProducts() {
-        ArrayList<Model> models = this.model.getModels();
-        ArrayList<Product> products = new ArrayList<>();
+        return this.products;
+    }
 
-        for (Model model : models) {
-            // Realizar casting de Model a Product
-            Product product = (Product) model;
-            products.add(product);
-        }
-
-        return products;
+    public int modelSize(){
+        return this.products.size();
     }
 
     public Product save(String name, String sku, double precio, int stock) {
-        Product product = new Product(name, sku, precio, stock);
-        this.model.save(product);
+        Product product = new Product(this.products.size(), name, sku, precio, stock);
+        this.products.add(product);
 
         return product;
     }
@@ -50,21 +45,35 @@ public class ProductController extends Controller {
 
     @Override
     public int getById(int id) {
-        return this.model.getById(id);
+        for (int i = 0; i < this.products.size(); i++) {
+            Model model = this.products.get(i);
+            if (model.getCodigo() == id) {
+                return i;
+            }
+        }
+
+        return -1;
     }
 
     @Override
     public Product getByIndex(int index) {
-        return (Product) this.model.getByIndex(index);
+        return this.products.get(index);
     }
 
     public int getBySku(String sku) {
-        return this.model.getBySku(sku);
+        for (int i = 0; i < this.modelSize(); i++) {
+            Product product = (Product) this.getByIndex(i);
+            if (product.getSku().equalsIgnoreCase(sku)) {
+                return i;
+            }
+        }
+
+        return -1;
     }
 
     public void delete(int id) {
         int index = this.getById(id);
-        this.model.delete(index);
+        this.products.remove(index);
     }
 
 

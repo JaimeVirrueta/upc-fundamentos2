@@ -8,8 +8,8 @@ public class Product extends Model {
     public Product() {
     }
 
-    public Product(String nombre, String sku, Double precio, Integer stock) {
-        super.setCodigo();
+    public Product(int id, String nombre, String sku, Double precio, Integer stock) {
+        super.setCodigo(id);
         super.setNombre(nombre);
         this.setSku(sku);
         this.setPrecio(precio);
@@ -38,17 +38,6 @@ public class Product extends Model {
 
     public void setStock(int stock) {
         this.stock = stock;
-    }
-
-    public int getBySku(String codigo) {
-        for (int i = 0; i < this.modelSize(); i++) {
-            Product product = (Product) this.getByIndex(i);
-            if (product.getSku().equalsIgnoreCase(codigo)) {
-                return i;
-            }
-        }
-
-        return -1;
     }
 
 }

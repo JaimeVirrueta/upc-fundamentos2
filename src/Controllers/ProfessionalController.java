@@ -1,6 +1,7 @@
 package Controllers;
 
 import Models.Model;
+import Models.Product;
 import Models.Professional;
 import Views.ProfessionalView;
 
@@ -8,6 +9,7 @@ import java.util.ArrayList;
 
 public class ProfessionalController extends Controller {
 
+    private ArrayList<Professional> professionals = new ArrayList<>();
     private Professional model;
     private ProfessionalView view;
 
@@ -22,23 +24,14 @@ public class ProfessionalController extends Controller {
     }
 
     public ArrayList<Professional> getProfessionals() {
-        ArrayList<Model> models = this.model.getModels();
-        ArrayList<Professional> professionals = new ArrayList<>();
-
-        for (Model model : models) {
-            // Realizar casting de Model a Product
-            Professional professional = (Professional) model;
-            professionals.add(professional);
-        }
-
-        return professionals;
+        return this.professionals;
     }
 
     public Professional save(String name, String profession) {
-        Professional technical = new Professional(name, profession);
-        this.model.save(technical);
+        Professional professional = new Professional(this.professionals.size(), name, profession);
+        this.professionals.add(professional);
 
-        return technical;
+        return professional;
     }
 
     @Override
@@ -50,17 +43,24 @@ public class ProfessionalController extends Controller {
 
     @Override
     public int getById(int id) {
-        return this.model.getById(id);
+        for (int i = 0; i < this.professionals.size(); i++) {
+            Model model = this.professionals.get(i);
+            if (model.getCodigo() == id) {
+                return i;
+            }
+        }
+
+        return -1;
     }
 
     @Override
     public Professional getByIndex(int index) {
-        return (Professional) this.model.getByIndex(index);
+        return this.professionals.get(index);
     }
 
     public void delete(int id) {
         int index = this.getById(id);
-        this.model.delete(index);
+        this.professionals.remove(index);
     }
 
     public void initData() {

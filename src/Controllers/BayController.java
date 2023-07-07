@@ -2,11 +2,13 @@ package Controllers;
 
 import Models.Bay;
 import Models.Model;
+import Models.Product;
 import Views.BayView;
 import java.util.ArrayList;
 
 public class BayController extends Controller {
 
+    private ArrayList<Bay> bays = new ArrayList<>();
     private Bay model;
     private BayView view;
 
@@ -21,21 +23,12 @@ public class BayController extends Controller {
     }
 
     public ArrayList<Bay> getBays() {
-        ArrayList<Model> models = this.model.getModels();
-        ArrayList<Bay> bays = new ArrayList<>();
-
-        for (Model model : models) {
-            // Realizar casting de Model a Bay
-            Bay bay = (Bay) model;
-            bays.add(bay);
-        }
-
-        return bays;
+        return this.bays;
     }
 
     public Bay save(String name, String local) {
-        Bay bay = new Bay(name, local);
-        this.model.save(bay);
+        Bay bay = new Bay(this.bays.size(), name, local);
+        this.bays.add(bay);
 
         return bay;
     }
@@ -49,21 +42,35 @@ public class BayController extends Controller {
 
     @Override
     public int getById(int id) {
-        return this.model.getById(id);
+        for (int i = 0; i < this.bays.size(); i++) {
+            Model model = this.bays.get(i);
+            if (model.getCodigo() == id) {
+                return i;
+            }
+        }
+
+        return -1;
     }
 
     @Override
     public Bay getByIndex(int index) {
-        return (Bay) this.model.getByIndex(index);
+        return this.bays.get(index);
     }
 
     public int getByName(String name) {
-        return this.model.getByName(name);
+        for (int i = 0; i < this.bays.size(); i++) {
+            Bay bay = (Bay) this.getByIndex(i);
+            if (bay.getNombre().equalsIgnoreCase(name)) {
+                return i;
+            }
+        }
+
+        return -1;
     }
 
     public void delete(int id) {
         int index = this.getById(id);
-        this.model.delete(index);
+        this.bays.remove(index);
     }
 
     public void initData() {

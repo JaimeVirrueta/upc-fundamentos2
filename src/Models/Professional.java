@@ -7,8 +7,8 @@ public class Professional extends Model  {
     public Professional() {
     }
 
-    public Professional(String name, String profession) {
-        super.setCodigo();
+    public Professional(int id, String name, String profession) {
+        super.setCodigo(id);
         super.setNombre(name);
         this.setProfession(profession);
     }

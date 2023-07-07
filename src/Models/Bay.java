@@ -7,8 +7,8 @@ public class Bay extends Model {
 
     public Bay() { }
 
-    public Bay(String name, String local) {
-        super.setCodigo();
+    public Bay(int id, String name, String local) {
+        super.setCodigo(id);
         super.setNombre(name);
         this.local = local;
     }
@@ -21,14 +21,4 @@ public class Bay extends Model {
         this.local = local;
     }
 
-    public int getByName(String name) {
-        for (int i = 0; i < this.modelSize(); i++) {
-            Bay bay = (Bay) this.getByIndex(i);
-            if (bay.getNombre().equalsIgnoreCase(name)) {
-                return i;
-            }
-        }
-
-        return -1;
-    }
 }
