@@ -1,12 +1,14 @@
-package TallerVehiculo;
+import TallerVehiculo.Bahia;
+import TallerVehiculo.Mecanico;
+import TallerVehiculo.OrdenServicio;
+import TallerVehiculo.Producto;
 import TallerVehiculo.Services.Screen;
-
-import java.util.Scanner;
 
 public class Main {
 
     public static void main(String[] args) {
         Producto producto = new Producto();
+        Mecanico mecanico = new Mecanico();
         Screen sc = new Screen();
 
         sc.printTitulo("Bienvenido al Gestor del Taller");
@@ -26,10 +28,10 @@ public class Main {
 
             switch (opcion) {
                 case 1:
-                    producto.IniciarMenu();
+                    producto.iniciarMenu();
                     break;
                 case 2:
-                    Mecanico.ejecutarMecanico();
+                    mecanico.iniciarMenu();
                     break;
                 case 3:
                     Bahia.ejecutarBahia();
@@ -41,7 +43,8 @@ public class Main {
                     salir = true;
                     break;
                 case 9:
-                    producto.IniciarData();
+                    producto.iniciarData();
+                    mecanico.iniciarData();
                     sc.printCorrecto("Data Inicializada");
                     break;
                 default:
