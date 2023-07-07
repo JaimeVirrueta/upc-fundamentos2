@@ -47,7 +47,7 @@ public class Mecanico {
     }
 
     public String inputEspecialidad() {
-        String valor = sc.getString("Ingrese la especialidad: ");
+        String valor = sc.getString("Ingrese la especialidad: (m)  Mecánico (e) Electricista");
 
         return this.validarEspecialidad(valor);
     }
