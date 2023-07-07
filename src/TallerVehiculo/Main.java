@@ -40,6 +40,10 @@ public class Main {
                 case 5:
                     salir = true;
                     break;
+                case 9:
+                    producto.IniciarData();
+                    sc.printCorrecto("Data Inicializada");
+                    break;
                 default:
                     sc.printAlerta("Opción inválida");
             }
