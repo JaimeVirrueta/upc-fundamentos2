@@ -10,15 +10,17 @@ public class Producto {
     private String sku;
     private String nombre;
     private Double precio;
+    private int stock;
 
     public Producto() {
     }
 
-    public Producto( String nombre, String sku, Double precio) {
+    public Producto( String nombre, String sku, Double precio, Integer stock) {
         this.setCodigo();
         this.setNombre(nombre);
         this.setSku(sku);
         this.setPrecio(precio);
+        this.setStock(stock);
     }
 
     public int getCodigo() {
@@ -68,10 +70,23 @@ public class Producto {
         return sc.getDouble("Ingrese el precio: ");
     }
 
+    public int getStock() {
+        return this.stock;
+    }
+
+    public void setStock(int stock) {
+        this.stock = stock;
+    }
+
+    public int inputStock() {
+        return sc.getInt("Ingrese el stock: ");
+    }
+
     public String toString() {
         return sc.getVerde("Código: ")  + this.getCodigo()
                 + sc.getVerde(", SKU: ") + this.getSku()
                 + sc.getVerde(", Nombre: ") + this.getNombre()
+                + sc.getVerde(", Stock: ") + this.getStock()
                 + sc.getVerde(", Precio: ") + this.getPrecio();
     }
 
@@ -113,8 +128,9 @@ public class Producto {
         String nombre = this.inputNombre();
         String sku = this.inputSku();
         double precio = this.inputPrecio();
+        int stock = this.inputStock();
 
-        Producto nuevoProducto = new Producto(nombre, sku, precio);
+        Producto nuevoProducto = new Producto(nombre, sku, precio, stock);
         this.lista.add(nuevoProducto);
 
         sc.printCorrecto("Producto agregado correctamente");
@@ -146,10 +162,12 @@ public class Producto {
             String nombre = this.inputNombre();
             String sku = this.inputSku();
             double precio = this.inputPrecio();
+            int stock = this.inputStock();
 
             producto.setNombre(nombre);
             producto.setSku(sku);
             producto.setPrecio(precio);
+            producto.setStock(stock);
 
             sc.printCorrecto("Producto actualizado correctamente");
         } else {
@@ -178,17 +196,17 @@ public class Producto {
     }
 
     public void IniciarData() {
-        Producto producto1 = new Producto("Aceite Liquimoly 5W30", "ACT001", 250.0);
+        Producto producto1 = new Producto("Aceite Liquimoly 5W30", "ACT001", 250.0, 10);
         lista.add(producto1);
-        Producto producto2 = new Producto("Filtro de aire de motor", "FLT001", 20.0);
+        Producto producto2 = new Producto("Filtro de aire de motor", "FLT001", 20.0, 12);
         lista.add(producto2);
-        Producto producto3 = new Producto("Filtro de aceite de motor", "FLT002", 50.0);
+        Producto producto3 = new Producto("Filtro de aceite de motor", "FLT002", 50.0, 15);
         lista.add(producto3);
-        Producto producto4 = new Producto("Bujias Bosh", "BUJ001", 50.0);
+        Producto producto4 = new Producto("Bujias Bosh", "BUJ001", 50.0, 40);
         lista.add(producto4);
-        Producto producto5 = new Producto("Bujias TORCH", "BUJ002", 50.0);
+        Producto producto5 = new Producto("Bujias TORCH", "BUJ002", 50.0, 80);
         lista.add(producto5);
-        Producto producto6 = new Producto("Filtro de aire de cabina", "FLT003", 20.0);
+        Producto producto6 = new Producto("Filtro de aire de cabina", "FLT003", 20.0, 10);
         lista.add(producto6);
     }
 
