@@ -28,7 +28,6 @@ public class Producto {
     }
 
     public void setCodigo() {
-
         this.codigo = lista.size() + 1;
     }
 
@@ -90,7 +89,7 @@ public class Producto {
                 + sc.getVerde(", Precio: ") + this.getPrecio();
     }
 
-    public void IniciarMenu() {
+    public void iniciarMenu() {
         boolean salir = false;
         while (!salir) {
             sc.printTitulo("Opcion 1 : Gestión de Productos");
@@ -145,7 +144,6 @@ public class Producto {
                 sc.print(producto.toString());
             }
         }
-
     }
 
     public void actualizar(){
@@ -195,7 +193,7 @@ public class Producto {
 
     }
 
-    public void IniciarData() {
+    public void iniciarData() {
         Producto producto1 = new Producto("Aceite Liquimoly 5W30", "ACT001", 250.0, 10);
         lista.add(producto1);
         Producto producto2 = new Producto("Filtro de aire de motor", "FLT001", 20.0, 12);
