@@ -1,12 +1,17 @@
 package TallerVehiculo;
+import TallerVehiculo.Services.Screen;
+
 import java.util.ArrayList;
-import java.util.Scanner;
+
 public class Producto{
-    private  static Scanner sc = new Scanner(System.in);
+
+    Screen sc = new Screen();
     private  static ArrayList<Producto> lista=new ArrayList<>();
-    public String codigo;
-    public String nombre;
-    public Double precio;
+    private String codigo;
+    private String nombre;
+    private Double precio;
+
+    public Producto(){};
 
     public Producto(String codigo, String nombre, Double precio) {
         this.codigo = codigo;
@@ -37,127 +42,140 @@ public class Producto{
         this.precio = precio;
     }
 
-    public static void crear(){
-        System.out.print("Ingrese el código del producto: ");
-        String codigo = sc.nextLine();
+    public void IniciarMenu(){
+        boolean salir = false;
+        while (!salir) {
+            sc.printTitulo("Opcion 1 : Gestión de Productos");
+            sc.printSubtitulo("1. Crear producto");
+            sc.printSubtitulo("2. Listar productos");
+            sc.printSubtitulo("3. Actualizar producto");
+            sc.printSubtitulo("4. Eliminar producto");
+            sc.printSubtitulo("5. Salir");
+            int opcion = sc.getInt("   Ingrese una opción: ");
 
-        System.out.print("Ingrese el nombre del producto: ");
-        String nombre = sc.nextLine();
-
-        System.out.print("Ingrese el precio del producto: ");
-        double precio = sc.nextDouble();
-        sc.nextLine(); // Consumir el salto de línea después de leer el número
-
-        Producto nuevoProducto = new Producto(codigo,nombre,precio);
-        nuevoProducto.setCodigo(codigo);
-        nuevoProducto.setNombre(nombre);
-        nuevoProducto.setPrecio(precio);
-
-        lista.add(nuevoProducto);
-
-        System.out.println("Producto agregado correctamente");
+            switch (opcion) {
+                case 1:
+                    this.crear();
+                    break;
+                case 2:
+                    this.listar();
+                    break;
+                case 3:
+                    this.actualizar();
+                    break;
+                case 4:
+                    this.eliminar();
+                    break;
+                case 5:
+                    salir = true;
+                    break;
+                default:
+                    sc.printAlerta("Opción inválida");
+            }
+        }
     }
-    public static void listar(){
+
+    public void crear(){
+        sc.printTitulo("Opción 1.1: Creación de Producto");
+        String codigo = sc.getString("Ingrese el código: ");
+
+        codigo = this.validarCodigo(codigo);
+
+        String nombre = sc.getString("Ingrese el nombre: ");
+        double precio = sc.getDouble("Ingrese el precio: ");
+
+        Producto nuevoProducto = new Producto(codigo, nombre, precio);
+        this.lista.add(nuevoProducto);
+
+        sc.printCorrecto("Producto agregado correctamente");
+    }
+
+    public String inputCodigo(){
+        String codigo = sc.getString("Ingrese el código: ");
+
+        return this.validarCodigo(codigo);
+    }
+
+    private String validarCodigo(String codigo) {
+        boolean salir = false;
+        while (!salir) {
+            int indice = buscarPorCodigo(codigo);
+            if (indice != -1) {
+                sc.printAlerta("El código del producto ya existe");
+
+                codigo = this.inputCodigo();
+            } else {
+                salir = true;
+            }
+        }
+
+        return codigo;
+    }
+
+    public void listar(){
+        sc.printTitulo("Opción 1.2: Listado de Productos");
         if (lista.isEmpty()) {
-            System.out.println("No hay productos en la lista");
+            sc.printAlerta("No hay productos en la lista");
         } else {
-            System.out.println("Lista de productos:");
             for (Producto producto : lista) {
-                System.out.println(producto.toString());
+                sc.print(producto.toString());
             }
         }
 
     }
-    public static void actualizar(){
-        System.out.print("Ingrese el código del producto a actualizar: ");
-        String codigo = sc.nextLine();
+    public void actualizar(){
+        sc.printTitulo("Opción 1.3: Gestión de Producto");
+        String codigo = sc.getString("Ingrese el código del producto a actualizar: ");
 
         int indice = buscarPorCodigo(codigo);
         if (indice != -1) {
             Producto producto = lista.get(indice);
 
-            System.out.println("Producto encontrado:");
-            System.out.println(producto);
+            sc.printCorrecto("Producto encontrado:");
+            sc.print(producto.toString());
 
-            System.out.print("Ingrese el nuevo nombre del producto: ");
-            String nuevoNombre = sc.nextLine();
+            String nombre = sc.getString("Ingrese el nuevo nombre del producto: ");
+            double precio = sc.getDouble("Ingrese el nuevo precio del producto: ");
 
-            System.out.print("Ingrese el nuevo precio del producto: ");
-            double nuevoPrecio = sc.nextDouble();
-            sc.nextLine(); // Consumir el salto de línea después de leer el número
+            producto.setNombre(nombre);
+            producto.setPrecio(precio);
 
-            producto.setNombre(nuevoNombre);
-            producto.setPrecio(nuevoPrecio);
-
-            System.out.println("Producto actualizado correctamente");
+            sc.printCorrecto("Producto actualizado correctamente");
         } else {
-            System.out.println("Producto no encontrado");
+            sc.printAlerta("Producto no encontrado");
         }
     }
-    private static int buscarPorCodigo(String codigo) {
+    private int buscarPorCodigo(String codigo) {
         for (int i = 0; i < lista.size(); i++) {
             Producto producto = lista.get(i);
             if (producto.getCodigo().equals(codigo)) {
                 return i; // Se encontró el producto, se devuelve el índice
             }
         }
+
         return -1; // No se encontró el producto
     }
 
-    public static void eliminar(){
-        System.out.print("Ingrese el código del producto a eliminar: ");
-        String codigo = sc.nextLine();
+    public void eliminar(){
+        sc.printTitulo("Opción 1.4: Eliminación de Producto");
+        String codigo = sc.getString("Ingrese el código del producto a eliminar: ");
 
         int indice = buscarPorCodigo(codigo);
         if (indice != -1) {
-            Producto producto = lista.get(indice);
+            Producto producto = this.lista.get(indice);
 
-            System.out.println("Producto encontrado:");
-            System.out.println(producto);
+            sc.printCorrecto("Producto encontrado:");
+            sc.print(producto.toString());
 
-            lista.remove(indice);
+            this.lista.remove(indice);
 
-            System.out.println("Producto eliminado correctamente");
+            sc.printCorrecto("Producto eliminado correctamente");
         } else {
-            System.out.println("Producto no encontrado");
+            sc.printAlerta("Producto no encontrado");
         }
 
     }
     public String toString() {
         return "Código: " + codigo + ", Nombre: " + nombre + ", Precio: " + precio;
-    }
-
-    public static void ejecutarProducto(){
-        boolean salir = false;
-        while (!salir) {
-            System.out.println("1. Crear producto");
-            System.out.println("2. Listar productos");
-            System.out.println("3. Actualizar producto");
-            System.out.println("4. Eliminar producto");
-            System.out.println("5. Salir");
-            System.out.print("Ingrese una opción: ");
-            int opcion = sc.nextInt();
-            sc.nextLine(); // Consumir el salto de línea después de leer el entero
-
-            switch (opcion) {
-                case 1:
-                    Producto.crear();
-                    break;
-                case 2:
-                    Producto.listar();
-                    break;
-                case 3:
-                    Producto.actualizar();
-                    break;
-                case 4:
-                    Producto.eliminar();
-                    break;
-                case 5:
-                    salir = true;
-                    break;
-                default:
-                    System.out.println("Opción inválida");
-            }
-        }
     }
 }
