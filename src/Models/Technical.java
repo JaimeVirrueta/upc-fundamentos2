@@ -3,39 +3,18 @@ import Services.Screen;
 
 import java.util.ArrayList;
 
-public class Mecanico {
+public class Technical extends Model  {
     Screen sc = new Screen();
-    static ArrayList<Mecanico> lista = new ArrayList<>();
-    private int codigo;
-    private String nombre;
+    static ArrayList<Technical> lista = new ArrayList<>();
     private String especialidad;
 
-    public Mecanico() {
+    public Technical() {
     }
 
-    public Mecanico(String nombre, String especialidad) {
+    public Technical(String nombre, String especialidad) {
         this.setCodigo();
         this.setNombre(nombre);
         this.setEspecialidad(especialidad);
-    }
-    public int getCodigo() {
-        return this.codigo;
-    }
-
-    public void setCodigo() {
-        this.codigo = lista.size() + 1;
-    }
-
-    public String getNombre() {
-        return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
-    public String inputNombre() {
-        return sc.getString("Ingrese el nombre: ");
     }
 
     public String getEspecialidad() {
@@ -108,11 +87,11 @@ public class Mecanico {
     public void crear(){
         sc.printTitulo("Opción 1.1: Creación de Mecánico");
 
-        Mecanico nuevoMecanico = new Mecanico(
-            this.inputNombre(),
+        Technical nuevoTechnical = new Technical(
+            "this.inputNombre()",
             this.inputEspecialidad()
         );
-        this.lista.add(nuevoMecanico);
+        this.lista.add(nuevoTechnical);
 
         sc.printCorrecto("Mecanico agregado correctamente");
     }
@@ -122,8 +101,8 @@ public class Mecanico {
         if (lista.isEmpty()) {
             sc.printAlerta("No hay mecanicos registrados");
         } else {
-            for (Mecanico mecanico : lista) {
-                sc.print(mecanico.toString());
+            for (Technical technical : lista) {
+                sc.print(technical.toString());
             }
         }
     }
@@ -134,13 +113,13 @@ public class Mecanico {
 
         int indice = this.buscar(codigo);
         if (indice != -1) {
-            Mecanico mecanico = lista.get(indice);
+            Technical technical = lista.get(indice);
 
             sc.printCorrecto("Mecánico encontrado:");
-            sc.print(mecanico.toString());
+            sc.print(technical.toString());
 
-            mecanico.setNombre(this.inputNombre());
-            mecanico.setEspecialidad(this.inputEspecialidad());
+            //technical.setNombre(this.inputNombre());
+            technical.setEspecialidad(this.inputEspecialidad());
 
             sc.printCorrecto("Mecánico actualizado correctamente");
         } else {
@@ -154,10 +133,10 @@ public class Mecanico {
 
         int indice = buscar(codigo);
         if (indice != -1) {
-            Mecanico mecanico = this.lista.get(indice);
+            Technical technical = this.lista.get(indice);
 
             sc.printCorrecto("Mecánico encontrado:");
-            sc.print(mecanico.toString());
+            sc.print(technical.toString());
 
             this.lista.remove(indice);
 
@@ -168,20 +147,20 @@ public class Mecanico {
     }
 
     public void iniciarData() {
-        Mecanico mec1 = new Mecanico("Piero", this.validarEspecialidad("e"));
+        Technical mec1 = new Technical("Piero", this.validarEspecialidad("e"));
         this.lista.add(mec1);
-        Mecanico mec2 = new Mecanico("Elbert", this.validarEspecialidad("m"));
+        Technical mec2 = new Technical("Elbert", this.validarEspecialidad("m"));
         this.lista.add(mec2);
-        Mecanico mec3 = new Mecanico("Milton", this.validarEspecialidad("e"));
+        Technical mec3 = new Technical("Milton", this.validarEspecialidad("e"));
         this.lista.add(mec3);
-        Mecanico mec4 = new Mecanico("Tio Quijada", this.validarEspecialidad("m"));
+        Technical mec4 = new Technical("Tio Quijada", this.validarEspecialidad("m"));
         this.lista.add(mec4);
     }
 
     private int buscar(int codigo) {
         for (int i = 0; i < lista.size(); i++) {
-            Mecanico mecanico = lista.get(i);
-            if (mecanico.getCodigo() == codigo) {
+            Technical technical = lista.get(i);
+            if (technical.getCodigo() == codigo) {
                 return i; // Se encontró el mecanico, se devuelve el índice
             }
         }

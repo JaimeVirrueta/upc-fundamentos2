@@ -1,14 +1,19 @@
+import Controllers.ProductController;
 import Models.Bahia;
-import Models.Mecanico;
+import Models.Technical;
 import Models.OrdenServicio;
-import Models.Producto;
+import Models.Product;
 import Services.Screen;
+import Views.ProductView;
 
 public class Main {
 
     public static void main(String[] args) {
-        Producto producto = new Producto();
-        Mecanico mecanico = new Mecanico();
+        Product product = new Product();
+        ProductView productView = new ProductView();
+        ProductController productController = new ProductController(product, productView);
+
+        Technical technical = new Technical();
         Screen sc = new Screen();
 
         sc.printTitulo("Bienvenido al Gestor del Taller");
@@ -28,10 +33,10 @@ public class Main {
 
             switch (opcion) {
                 case 1:
-                    producto.iniciarMenu();
+                    productController.initializeMenu();
                     break;
                 case 2:
-                    mecanico.iniciarMenu();
+                    technical.iniciarMenu();
                     break;
                 case 3:
                     Bahia.ejecutarBahia();
@@ -43,8 +48,8 @@ public class Main {
                     salir = true;
                     break;
                 case 9:
-                    producto.iniciarData();
-                    mecanico.iniciarData();
+                    productController.initData();
+                    technical.iniciarData();
                     sc.printCorrecto("Data Inicializada");
                     break;
                 default:
