@@ -1,4 +1,4 @@
-package TallerVehiculo.Services;
+package Services;
 
 import java.util.Scanner;
 

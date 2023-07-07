@@ -1,8 +1,8 @@
-import TallerVehiculo.Bahia;
-import TallerVehiculo.Mecanico;
-import TallerVehiculo.OrdenServicio;
-import TallerVehiculo.Producto;
-import TallerVehiculo.Services.Screen;
+import Models.Bahia;
+import Models.Mecanico;
+import Models.OrdenServicio;
+import Models.Producto;
+import Services.Screen;
 
 public class Main {
 

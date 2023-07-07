@@ -1,5 +1,6 @@
-package TallerVehiculo;
-import TallerVehiculo.Services.Screen;
+package Models;
+
+import Services.Screen;
 
 import java.util.ArrayList;
 
