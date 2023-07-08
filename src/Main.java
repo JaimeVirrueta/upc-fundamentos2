@@ -1,13 +1,7 @@
-import Controllers.BayController;
-import Controllers.ClientController;
-import Controllers.ProductController;
-import Controllers.ProfessionalController;
+import Controllers.*;
 import Models.*;
 import Services.Screen;
-import Views.BayView;
-import Views.ClientView;
-import Views.ProductView;
-import Views.ProfessionalView;
+import Views.*;
 
 public class Main {
 
@@ -28,6 +22,10 @@ public class Main {
         ClientView clientView = new ClientView();
         ClientController clientController = new ClientController(client, clientView);
 
+        Car car = new Car();
+        CarView carView = new CarView();
+        CarController carController = new CarController(car, carView);
+
         Screen sc = new Screen();
 
         sc.printTitulo("Bienvenido al Gestor del Taller");
@@ -43,7 +41,8 @@ public class Main {
             sc.printSubtitulo("3. Gestión de Profesionales");
             sc.printSubtitulo("4. Gestión de Bahias");
             sc.printSubtitulo("5. Gestión de Clientes");
-            sc.printSubtitulo("6. Salir");
+            sc.printSubtitulo("6. Gestión de Autos");
+            sc.printSubtitulo("7. Salir");
             int opcion = sc.getInt("   Ingrese una opción: ");
 
             switch (opcion) {
@@ -63,6 +62,9 @@ public class Main {
                     clientController.initializeMenu();
                     break;
                 case 6:
+                    carController.initializeMenu();
+                    break;
+                case 7:
                     salir = true;
                     break;
                 case 9:
@@ -70,6 +72,7 @@ public class Main {
                     professionalController.initData();
                     bayController.initData();
                     clientController.initData();
+                    carController.initData();
                     sc.printCorrecto("   Data Inicializada");
                     break;
                 default:
