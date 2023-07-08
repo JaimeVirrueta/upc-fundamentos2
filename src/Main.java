@@ -26,6 +26,11 @@ public class Main {
         CarView carView = new CarView();
         CarController carController = new CarController(car, carView);
 
+        Order order = new Order();
+        OrderView orderView = new OrderView();
+        OrderController orderController = new OrderController(order, orderView);
+        orderController.setControllers(clientController, professionalController, bayController, carController);
+
         Screen sc = new Screen();
 
         sc.printTitulo("Bienvenido al Gestor del Taller");
@@ -47,7 +52,7 @@ public class Main {
 
             switch (opcion) {
                 case 1:
-                    OrdenServicio.ejecutarOrdenServicio();
+                    orderController.initializeMenu();
                     break;
                 case 2:
                     productController.initializeMenu();
@@ -73,6 +78,8 @@ public class Main {
                     bayController.initData();
                     clientController.initData();
                     carController.initData();
+                    orderController.initData();
+
                     sc.printCorrecto("   Data Inicializada");
                     break;
                 default:

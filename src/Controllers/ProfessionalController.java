@@ -27,9 +27,14 @@ public class ProfessionalController extends Controller {
         return this.professionals;
     }
 
+
+    public int modelSize(){
+        return this.getProfessionals().size();
+    }
+
     public Professional save(String name, String profession) {
-        Professional professional = new Professional(this.professionals.size(), name, profession);
-        this.professionals.add(professional);
+        Professional professional = new Professional(this.modelSize(), name, profession);
+        this.getProfessionals().add(professional);
 
         return professional;
     }
@@ -43,8 +48,8 @@ public class ProfessionalController extends Controller {
 
     @Override
     public int getById(int id) {
-        for (int i = 0; i < this.professionals.size(); i++) {
-            Model model = this.professionals.get(i);
+        for (int i = 0; i < this.modelSize(); i++) {
+            Model model = this.getProfessionals().get(i);
             if (model.getCodigo() == id) {
                 return i;
             }
@@ -55,12 +60,12 @@ public class ProfessionalController extends Controller {
 
     @Override
     public Professional getByIndex(int index) {
-        return this.professionals.get(index);
+        return this.getProfessionals().get(index);
     }
 
     public void delete(int id) {
         int index = this.getById(id);
-        this.professionals.remove(index);
+        this.getProfessionals().remove(index);
     }
 
     public void initData() {

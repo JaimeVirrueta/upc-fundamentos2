@@ -4,19 +4,24 @@ public class Car extends Model{
 
     private String license_plate;
     private String brand;
-    private String car_model;
+    private String modelCar;
 
     public Car() {
     }
 
-    public Car(int id,String license_plate, String brand, String car_model) {
+    public Car(int id,String license_plate, String brand, String modelCar) {
         super.setCodigo(id);
         this.license_plate = license_plate;
         this.brand = brand;
-        this.car_model = car_model;
+        this.modelCar = modelCar;
     }
 
-    public String getLicense_plate() {
+    @Override
+    public String getNombre() {
+        return this.getBrand() + " - " + this.getModelCar() + " (" + this.getLicensePlate() + ")";
+    }
+
+    public String getLicensePlate() {
         return license_plate;
     }
 
@@ -32,11 +37,11 @@ public class Car extends Model{
         this.brand = brand;
     }
 
-    public String getCar_model() {
-        return car_model;
+    public String getModelCar() {
+        return modelCar;
     }
 
-    public void setCar_model(String car_model) {
-        this.car_model = car_model;
+    public void setModelCar(String modelCar) {
+        this.modelCar = modelCar;
     }
 }

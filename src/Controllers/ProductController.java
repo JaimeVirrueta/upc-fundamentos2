@@ -30,7 +30,7 @@ public class ProductController extends Controller {
     }
 
     public Product save(String name, String sku, double precio, int stock) {
-        Product product = new Product(this.products.size(), name, sku, precio, stock);
+        Product product = new Product(this.modelSize(), name, sku, precio, stock);
         this.products.add(product);
 
         return product;
@@ -45,7 +45,7 @@ public class ProductController extends Controller {
 
     @Override
     public int getById(int id) {
-        for (int i = 0; i < this.products.size(); i++) {
+        for (int i = 0; i < this.modelSize(); i++) {
             Model model = this.products.get(i);
             if (model.getCodigo() == id) {
                 return i;

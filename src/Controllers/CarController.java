@@ -1,10 +1,8 @@
 package Controllers;
 
 import Models.Car;
-import Models.Client;
 import Models.Model;
 import Views.CarView;
-import Views.ClientView;
 
 import java.util.ArrayList;
 
@@ -62,7 +60,7 @@ public class CarController extends Controller{
     public int getByLicense_plate(String license_plate) {
         for (int i = 0; i < this.cars.size(); i++) {
             Car car = (Car) this.getByIndex(i);
-            if (car.getLicense_plate().equalsIgnoreCase(license_plate)) {
+            if (car.getLicensePlate().equalsIgnoreCase(license_plate)) {
                 return i;
             }
         }

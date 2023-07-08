@@ -1,9 +1,7 @@
 package Views;
 
 import Controllers.CarController;
-import Controllers.ClientController;
 import Models.Car;
-import Models.Client;
 import Models.Model;
 
 public class CarView extends View{
@@ -111,7 +109,7 @@ public class CarView extends View{
 
             car.setLicense_plate(this.getLicensePlate());
             car.setBrand(this.getBrand());
-            car.setCar_model(this.getCar_model());
+            car.setModelCar(this.getCar_model());
 
             sc.printCorrecto("Auto actualizado correctamente");
         } else {
@@ -140,8 +138,8 @@ public class CarView extends View{
         Car car = (Car) model;
 
         return super.sc.getVerde("Código: ")  + car.getCodigo()
-                + super.sc.getVerde(", Matricula: ") + car.getLicense_plate()
+                + super.sc.getVerde(", Matricula: ") + car.getLicensePlate()
                 + super.sc.getVerde(", Marca: ") + car.getBrand()
-                + super.sc.getVerde(", Modelo: ") + car.getCar_model();
+                + super.sc.getVerde(", Modelo: ") + car.getModelCar();
     }
 }
