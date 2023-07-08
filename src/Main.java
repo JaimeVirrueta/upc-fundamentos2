@@ -1,12 +1,11 @@
 import Controllers.BayController;
+import Controllers.ClientController;
 import Controllers.ProductController;
 import Controllers.ProfessionalController;
-import Models.Bay;
-import Models.Professional;
-import Models.OrdenServicio;
-import Models.Product;
+import Models.*;
 import Services.Screen;
 import Views.BayView;
+import Views.ClientView;
 import Views.ProductView;
 import Views.ProfessionalView;
 
@@ -25,6 +24,10 @@ public class Main {
         BayView bayView = new BayView();
         BayController bayController = new BayController(bay, bayView);
 
+        Client client = new Client();
+        ClientView clientView = new ClientView();
+        ClientController clientController = new ClientController(client, clientView);
+
         Screen sc = new Screen();
 
         sc.printTitulo("Bienvenido al Gestor del Taller");
@@ -39,7 +42,8 @@ public class Main {
             sc.printSubtitulo("2. Gestión de Productos");
             sc.printSubtitulo("3. Gestión de Profesionales");
             sc.printSubtitulo("4. Gestión de Bahias");
-            sc.printSubtitulo("5. Salir");
+            sc.printSubtitulo("5. Gestión de Clientes");
+            sc.printSubtitulo("6. Salir");
             int opcion = sc.getInt("   Ingrese una opción: ");
 
             switch (opcion) {
@@ -56,12 +60,16 @@ public class Main {
                     bayController.initializeMenu();
                     break;
                 case 5:
+                    clientController.initializeMenu();
+                    break;
+                case 6:
                     salir = true;
                     break;
                 case 9:
                     productController.initData();
                     professionalController.initData();
                     bayController.initData();
+                    clientController.initData();
                     sc.printCorrecto("   Data Inicializada");
                     break;
                 default:
