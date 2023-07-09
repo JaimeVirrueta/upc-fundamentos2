@@ -39,7 +39,7 @@ public class VehicleController extends Controller{
     public int getById(int id) {
         for (int i = 0; i < this.modelSize(); i++) {
             Model model = this.getVehicles().get(i);
-            if (model.getCodigo() == id) {
+            if (model.getId() == id) {
                 return i;
             }
         }
@@ -78,8 +78,8 @@ public class VehicleController extends Controller{
     public int getNameSize() {
         int size = 0;
         for (Vehicle vehicle : this.getVehicles()) {
-            if (vehicle.getNombre().length() > size) {
-                size = vehicle.getNombre().length();
+            if (vehicle.getName().length() > size) {
+                size = vehicle.getName().length();
             }
         }
 

@@ -1,25 +1,25 @@
 package Models;
 
-import java.util.ArrayList;
-
 abstract public class Model {
 
-    private int codigo;
-    private String nombre;
-    public int getCodigo() {
-        return this.codigo;
+    private int id;
+
+    private String name;
+
+    public int getId() {
+        return this.id;
     }
 
-    public void setCodigo(int nextId) {
-        this.codigo = nextId + 1;
+    public void setId(int nextId) {
+        this.id = nextId + 1;
     }
 
-    public String getNombre() {
-        return nombre;
+    public String getName() {
+        return name;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public void setName(String name) {
+        this.name = name;
     }
 
 }

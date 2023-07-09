@@ -39,7 +39,7 @@ public class CustomerController extends Controller{
     public int getById(int id) {
         for (int i = 0; i < this.modelSize(); i++) {
             Model model = this.getCustomers().get(i);
-            if (model.getCodigo() == id) {
+            if (model.getId() == id) {
                 return i;
             }
         }
@@ -55,7 +55,7 @@ public class CustomerController extends Controller{
     public int getByCell_phone(String cell) {
         for (int i = 0; i < this.modelSize(); i++) {
             Customer customer = this.getByIndex(i);
-            if (customer.getCellPhone().equalsIgnoreCase(cell)) {
+            if (customer.getPhone().equalsIgnoreCase(cell)) {
                 return i;
             }
         }
@@ -77,8 +77,8 @@ public class CustomerController extends Controller{
     public int getNameSize() {
         int size = 0;
         for (Customer customer : this.getCustomers()) {
-            if (customer.getNombre().length() > size) {
-                size = customer.getNombre().length();
+            if (customer.getName().length() > size) {
+                size = customer.getName().length();
             }
         }
 

@@ -48,7 +48,7 @@ public class OrderController extends Controller {
     }
 
     public Order save(Order order) {
-        order.setCodigo(this.modelSize());
+        order.setId(this.modelSize());
         order.setStartDate(Utils.getCurrentDateTime());
         this.getOrders().add(order);
 
@@ -65,7 +65,7 @@ public class OrderController extends Controller {
     public int getById(int id) {
         for (int i = 0; i < this.modelSize(); i++) {
             Model model = this.orders.get(i);
-            if (model.getCodigo() == id) {
+            if (model.getId() == id) {
                 return i;
             }
         }
@@ -89,41 +89,41 @@ public class OrderController extends Controller {
     }
 
     public int getVehicle(int index) {
-        return this.vehicleController.getByIndex(index).getCodigo();
+        return this.vehicleController.getByIndex(index).getId();
     }
 
     public String getVehicle(Order order) {
-        return this.vehicleController.get(order.getVehicleId()).getNombre();
+        return this.vehicleController.get(order.getVehicleId()).getName();
     }
 
     public int getCustomer(int customerId) {
         int index = this.customerController.getById(customerId);
 
-        return this.customerController.getByIndex(index).getCodigo();
+        return this.customerController.getByIndex(index).getId();
     }
 
     public String getCustomer(Order order) {
-        return this.customerController.get(order.getCustomerId()).getNombre();
+        return this.customerController.get(order.getCustomerId()).getName();
     }
 
     public int getProfessional(int professionalId) {
         int index = this.professionalController.getById(professionalId);
 
-        return this.professionalController.getByIndex(index).getCodigo();
+        return this.professionalController.getByIndex(index).getId();
     }
 
     public String getProfessional(Order order) {
-        return this.professionalController.get(order.getProfessionalId()).getNombre();
+        return this.professionalController.get(order.getProfessionalId()).getName();
     }
 
     public int getBay(int bay) {
         int index = this.bayController.getById(bay);
 
-        return this.bayController.getByIndex(index).getCodigo();
+        return this.bayController.getByIndex(index).getId();
     }
 
     public String getBay(Order order) {
-        return this.bayController.get(order.getBayId()).getNombre();
+        return this.bayController.get(order.getBayId()).getName();
     }
 
     public void initData() {
@@ -134,8 +134,8 @@ public class OrderController extends Controller {
     public int getNameSize() {
         int size = 0;
         for (Order order : this.getOrders()) {
-            if (order.getNombre().length() > size) {
-                size = order.getNombre().length();
+            if (order.getName().length() > size) {
+                size = order.getName().length();
             }
         }
 

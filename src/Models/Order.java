@@ -3,19 +3,28 @@ package Models;
 import java.util.ArrayList;
 
 public class Order extends Model {
+
     private int customerId;
+
     private int vehicleId;
+
     private int professionalId;
+
     private int bayId;
+
     private String startDate;
+
     private String endDate;
+
     private int mileage;
+
     private String orderType;
+
     private Double igv = 0.18;
+
     private ArrayList<Product> products;
 
     private ArrayList<Professional> professionals;
-
 
     public Order() {
         this.products = new ArrayList<>();
@@ -34,8 +43,8 @@ public class Order extends Model {
             String endDate,
             int mileage
     ) {
-        super.setCodigo(id);
-        super.setNombre(name);
+        super.setId(id);
+        super.setName(name);
         this.setCustomerId(customerId);
         this.setVehicleId(vehicleId);
         this.setBayId(bayId);
@@ -47,9 +56,11 @@ public class Order extends Model {
         this.products = new ArrayList<>();
         this.professionals = new ArrayList<>();
     }
+
     public ArrayList<Product> getProducts() {
         return products;
     }
+
     public ArrayList<Professional> getProfessionals() {
         return professionals;
     }
@@ -61,6 +72,7 @@ public class Order extends Model {
     public void removeProduct(Product product) {
         this.products.remove(product);
     }
+
     public void addProfessional(Professional professional) {
         this.professionals.add(professional);
     }
@@ -68,6 +80,7 @@ public class Order extends Model {
     public void removeProfessional(Professional professional) {
         this.professionals.remove(professional);
     }
+
     public int getCustomerId() {
         return this.customerId;
     }

@@ -40,7 +40,7 @@ public class ProfessionalController extends Controller {
     public int getById(int id) {
         for (int i = 0; i < this.modelSize(); i++) {
             Model model = this.getProfessionals().get(i);
-            if (model.getCodigo() == id) {
+            if (model.getId() == id) {
                 return i;
             }
         }
@@ -69,8 +69,8 @@ public class ProfessionalController extends Controller {
     public int getNameSize() {
         int size = 0;
         for (Professional professional : this.getProfessionals()) {
-            if (professional.getNombre().length() > size) {
-                size = professional.getNombre().length();
+            if (professional.getName().length() > size) {
+                size = professional.getName().length();
             }
         }
 

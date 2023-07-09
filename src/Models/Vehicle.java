@@ -2,31 +2,30 @@ package Models;
 
 public class Vehicle extends Model{
 
-    private String license_plate;
+    private String licensePlate;
+
     private String brand;
+
     private String modelCar;
 
-    public Vehicle() {
-    }
-
-    public Vehicle(int id, String license_plate, String brand, String modelCar) {
-        super.setCodigo(id);
-        this.license_plate = license_plate;
+    public Vehicle(int id, String licensePlate, String brand, String modelCar) {
+        super.setId(id);
+        this.licensePlate = licensePlate;
         this.brand = brand;
         this.modelCar = modelCar;
     }
 
     @Override
-    public String getNombre() {
+    public String getName() {
         return this.getBrand() + " - " + this.getModelCar() + " (" + this.getLicensePlate() + ")";
     }
 
     public String getLicensePlate() {
-        return license_plate;
+        return licensePlate;
     }
 
-    public void setLicense_plate(String license_plate) {
-        this.license_plate = license_plate;
+    public void setLicensePlate(String licensePlate) {
+        this.licensePlate = licensePlate;
     }
 
     public String getBrand() {

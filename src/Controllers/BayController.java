@@ -38,7 +38,7 @@ public class BayController extends Controller {
     public int getById(int id) {
         for (int i = 0; i < this.modelSize(); i++) {
             Model model = this.getBays().get(i);
-            if (model.getCodigo() == id) {
+            if (model.getId() == id) {
                 return i;
             }
         }
@@ -54,7 +54,7 @@ public class BayController extends Controller {
     public int getByName(String name) {
         for (int i = 0; i < this.modelSize(); i++) {
             Bay bay = this.getByIndex(i);
-            if (bay.getNombre().equalsIgnoreCase(name)) {
+            if (bay.getName().equalsIgnoreCase(name)) {
                 return i;
             }
         }

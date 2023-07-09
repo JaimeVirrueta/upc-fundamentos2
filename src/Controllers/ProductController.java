@@ -38,7 +38,7 @@ public class ProductController extends Controller {
     public int getById(int id) {
         for (int i = 0; i < this.modelSize(); i++) {
             Model model = this.getProducts().get(i);
-            if (model.getCodigo() == id) {
+            if (model.getId() == id) {
                 return i;
             }
         }
@@ -79,8 +79,8 @@ public class ProductController extends Controller {
     public int getNameSize() {
         int size = 0;
         for (Product products : this.getProducts()) {
-            if (products.getNombre().length() > size) {
-                size = products.getNombre().length();
+            if (products.getName().length() > size) {
+                size = products.getName().length();
             }
         }
 
