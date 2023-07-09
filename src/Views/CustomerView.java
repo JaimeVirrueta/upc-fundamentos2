@@ -98,6 +98,7 @@ public class CustomerView extends View{
 
             input.printCorrecto("Cliente encontrado: ");
             render.printTable(customer);
+
             String confirmDelete = "";
             while (!confirmDelete.equalsIgnoreCase("S") && !confirmDelete.equalsIgnoreCase("N")) {
                 confirmDelete = input.getString("¿Estás seguro de querer eliminar este cliente? (S/N): ");
