@@ -20,7 +20,7 @@ public class BayView extends View{
             input.printSubtitulo("2. Listar");
             input.printSubtitulo("3. Actualizar");
             input.printSubtitulo("4. Eliminar");
-            input.printSubtitulo("5. Salir");
+            input.printSubtitulo("0. Salir");
             this.subMenuOption = input.getInt("   Ingrese una opción: ");
 
             switch (this.subMenuOption) {

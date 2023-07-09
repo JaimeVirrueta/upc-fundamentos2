@@ -57,7 +57,7 @@ public class ProductView extends View{
         );
 
         input.printCorrecto("Producto creado correctamente");
-        input.print(this.toString(product));
+        render.printTable(product);
     }
 
     @Override

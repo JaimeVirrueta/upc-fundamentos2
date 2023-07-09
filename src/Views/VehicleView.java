@@ -57,8 +57,7 @@ public class VehicleView extends View{
         );
 
         input.printCorrecto("Vehículo creado correctamente");
-        input.print(this.toString(vehicle));
-    }
+        render.printTable(vehicle);    }
 
     @Override
     public void index() {
@@ -80,7 +79,7 @@ public class VehicleView extends View{
             Vehicle vehicle = this.controller.getByIndex(index);
 
             input.printCorrecto("Vehículo encontrado:");
-            input.print(this.toString(vehicle));
+            render.printTable(vehicle);
 
             vehicle.setLicensePlate(this.inputLicensePlate());
             vehicle.setBrand(this.inputBrand());
@@ -101,7 +100,7 @@ public class VehicleView extends View{
             Vehicle vehicle = (Vehicle) this.controller.get(code);
 
             input.printCorrecto("Vehículo encontrado: ");
-            input.print(this.toString(vehicle));
+            render.printTable(vehicle);
 
             this.controller.delete(code);
 
