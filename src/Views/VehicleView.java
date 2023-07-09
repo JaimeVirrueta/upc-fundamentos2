@@ -1,14 +1,14 @@
 package Views;
 
-import Controllers.CarController;
-import Models.Car;
+import Controllers.VehicleController;
+import Models.Vehicle;
 import Models.Model;
 
-public class CarView extends View{
+public class VehicleView extends View{
 
-    private CarController controller;
+    private VehicleController controller;
 
-    public void setController(CarController controller){
+    public void setController(VehicleController controller){
         this.controller = controller;
     }
     public String getLicensePlate(){
@@ -25,7 +25,7 @@ public class CarView extends View{
     private String validateLicensePlate(String matricula) {
         boolean salir = false;
         while (!salir) {
-            int indice = this.controller.getByLicense_plate(matricula);
+            int indice = this.controller.getByLicensePlate(matricula);
             if (indice != -1) {
                 sc.printAlerta("El matricula '" + matricula + "' ya está registrada");
 
@@ -74,23 +74,23 @@ public class CarView extends View{
     public void create(){
         sc.printTitulo("Opción 1.1: Creación de Autos");
 
-        Car car = this.controller.save(
+        Vehicle vehicle = this.controller.save(
                 this.getLicensePlate(),
                 this.getBrand(),
                 this.getCar_model()
         );
 
         sc.printCorrecto("Auto agregado correctamente");
-        sc.print(this.toString(car));
+        sc.print(this.toString(vehicle));
     }
     @Override
     public void index() {
         sc.printTitulo("Opción 1.2: Listado de Autos");
-        if (this.controller.getCars().size() == 0) {
+        if (this.controller.getVehicles().size() == 0) {
             sc.printAlerta("No hay autos en la lista");
         } else {
-            for (Car car : this.controller.getCars()) {
-                sc.print(this.toString(car));
+            for (Vehicle vehicle : this.controller.getVehicles()) {
+                sc.print(this.toString(vehicle));
             }
         }
     }
@@ -102,14 +102,14 @@ public class CarView extends View{
 
         int index = this.controller.getById(codigo);
         if (index != -1) {
-            Car car = this.controller.getByIndex(index);
+            Vehicle vehicle = this.controller.getByIndex(index);
 
             sc.printCorrecto("Auto encontrado:");
-            sc.print(this.toString(car));
+            sc.print(this.toString(vehicle));
 
-            car.setLicense_plate(this.getLicensePlate());
-            car.setBrand(this.getBrand());
-            car.setModelCar(this.getCar_model());
+            vehicle.setLicense_plate(this.getLicensePlate());
+            vehicle.setBrand(this.getBrand());
+            vehicle.setModelCar(this.getCar_model());
 
             sc.printCorrecto("Auto actualizado correctamente");
         } else {
@@ -122,10 +122,10 @@ public class CarView extends View{
         int code = sc.getInt("Ingrese el código del auto a eliminar: ");
 
         try {
-            Car car = this.controller.get(code);
+            Vehicle vehicle = this.controller.get(code);
 
             sc.printCorrecto("Auto encontrado: ");
-            sc.print(this.toString(car));
+            sc.print(this.toString(vehicle));
 
             this.controller.delete(code);
 
@@ -135,11 +135,11 @@ public class CarView extends View{
     }
 
     public String toString(Model model) {
-        Car car = (Car) model;
+        Vehicle vehicle = (Vehicle) model;
 
-        return super.sc.getVerde("Código: ")  + car.getCodigo()
-                + super.sc.getVerde(", Matricula: ") + car.getLicensePlate()
-                + super.sc.getVerde(", Marca: ") + car.getBrand()
-                + super.sc.getVerde(", Modelo: ") + car.getModelCar();
+        return super.sc.getVerde("Código: ")  + vehicle.getCodigo()
+                + super.sc.getVerde(", Matricula: ") + vehicle.getLicensePlate()
+                + super.sc.getVerde(", Marca: ") + vehicle.getBrand()
+                + super.sc.getVerde(", Modelo: ") + vehicle.getModelCar();
     }
 }

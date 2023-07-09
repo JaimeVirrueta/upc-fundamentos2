@@ -1,15 +1,14 @@
 package Views;
 
-import Controllers.ClientController;
-import Models.Bay;
-import Models.Client;
+import Controllers.CustomerController;
+import Models.Customer;
 import Models.Model;
 
 public class ClientView extends View{
 
-    private ClientController controller;
+    private CustomerController controller;
 
-    public void setController(ClientController controller){
+    public void setController(CustomerController controller){
         this.controller = controller;
     }
     public String getNombre() {
@@ -74,22 +73,22 @@ public class ClientView extends View{
     public void create(){
         sc.printTitulo("Opción 1.1: Creación de Clientes");
 
-        Client client = this.controller.save(
+        Customer customer = this.controller.save(
                 this.getNombre(),
                 this.getCell_phone()
         );
 
         sc.printCorrecto("Cliente agregada correctamente");
-        sc.print(this.toString(client));
+        sc.print(this.toString(customer));
     }
     @Override
     public void index() {
         sc.printTitulo("Opción 1.2: Listado de Clientes");
-        if (this.controller.getClients().size() == 0) {
+        if (this.controller.getCustomers().size() == 0) {
             sc.printAlerta("No hay clientes en la lista");
         } else {
-            for (Client client : this.controller.getClients()) {
-                sc.print(this.toString(client));
+            for (Customer customer : this.controller.getCustomers()) {
+                sc.print(this.toString(customer));
             }
         }
     }
@@ -101,13 +100,13 @@ public class ClientView extends View{
 
         int index = this.controller.getById(codigo);
         if (index != -1) {
-            Client client = this.controller.getByIndex(index);
+            Customer customer = this.controller.getByIndex(index);
 
             sc.printCorrecto("Cliente encontrado:");
-            sc.print(this.toString(client));
+            sc.print(this.toString(customer));
 
-            client.setNombre(this.getNombre());
-            client.setCell_phone(this.getCell_phone());
+            customer.setNombre(this.getNombre());
+            customer.setCell_phone(this.getCell_phone());
 
             sc.printCorrecto("Cliente actualizado correctamente");
         } else {
@@ -120,10 +119,10 @@ public class ClientView extends View{
         int code = sc.getInt("Ingrese el código del cliente a eliminar: ");
 
         try {
-            Client client = this.controller.get(code);
+            Customer customer = this.controller.get(code);
 
             sc.printCorrecto("Cliente encontrado: ");
-            sc.print(this.toString(client));
+            sc.print(this.toString(customer));
 
             this.controller.delete(code);
 
@@ -133,11 +132,11 @@ public class ClientView extends View{
     }
 
     public String toString(Model model) {
-        Client client = (Client) model;
+        Customer customer = (Customer) model;
 
-        return super.sc.getVerde("Código: ")  + client.getCodigo()
-                + super.sc.getVerde(", Nombre: ") + client.getNombre()
-                + super.sc.getVerde(", Celular: ") + client.getCell_phone();
+        return super.sc.getVerde("Código: ")  + customer.getCodigo()
+                + super.sc.getVerde(", Nombre: ") + customer.getNombre()
+                + super.sc.getVerde(", Celular: ") + customer.getCellPhone();
     }
 
 

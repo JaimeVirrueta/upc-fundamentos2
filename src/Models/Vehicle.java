@@ -1,15 +1,15 @@
 package Models;
 
-public class Car extends Model{
+public class Vehicle extends Model{
 
     private String license_plate;
     private String brand;
     private String modelCar;
 
-    public Car() {
+    public Vehicle() {
     }
 
-    public Car(int id,String license_plate, String brand, String modelCar) {
+    public Vehicle(int id, String license_plate, String brand, String modelCar) {
         super.setCodigo(id);
         this.license_plate = license_plate;
         this.brand = brand;

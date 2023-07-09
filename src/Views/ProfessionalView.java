@@ -116,7 +116,7 @@ public class ProfessionalView extends View{
         int code = sc.getInt("Ingrese el código: ");
 
         try {
-            Professional professional = this.controller.get(code);
+            Professional professional = (Professional) this.controller.get(code);
 
             sc.printCorrecto("Profesional encontrado:");
             tbl.printTable(professional);

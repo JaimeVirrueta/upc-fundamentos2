@@ -1,46 +1,40 @@
 package Controllers;
 
-import Models.Car;
 import Models.Model;
 import Models.Order;
-import Models.Product;
-import Services.Screen;
 import Services.Utils;
 import Views.OrderView;
-
 import java.util.ArrayList;
 
 public class OrderController extends Controller {
-    Screen sc = new Screen();
-    private ClientController customerController;
+    private CustomerController customerController;
     private ProfessionalController professionalController;
     private BayController bayController;
-    private CarController vehicleController;
+    private VehicleController vehicleController;
     private ProductController productController;
-    private ArrayList<Order> orders = new ArrayList<>();
-    private Order model;
-    private OrderView view;
+    private final ArrayList<Order> orders = new ArrayList<>();
+    private final OrderView view;
 
-    public OrderController(Order order, OrderView orderView) {
-        this.model = order;
+    public OrderController(OrderView orderView) {
         this.view = orderView;
         this.view.setController(this);
     }
 
     public void setControllers(
-            ClientController customerController
+            CustomerController customerController
             , ProfessionalController professionalController
             , BayController bayController
-            , CarController carController,
-              ProductController productController
+            , VehicleController vehicleController
+            , ProductController productController
     ) {
         this.customerController = customerController;
         this.professionalController = professionalController;
         this.bayController = bayController;
-        this.vehicleController = carController;
+        this.vehicleController = vehicleController;
         this.productController = productController;
     }
 
+    @Override
     public void initializeMenu() {
         this.view.initializeMenu();
     }
@@ -49,14 +43,14 @@ public class OrderController extends Controller {
         return this.orders;
     }
 
-    public int modelSize(){
+    public int modelSize() {
         return this.getOrders().size();
     }
 
     public Order save(Order order) {
         order.setCodigo(this.modelSize());
         order.setStartDate(Utils.getCurrentDateTime());
-        this.orders.add(order);
+        this.getOrders().add(order);
 
         return order;
     }
@@ -65,13 +59,6 @@ public class OrderController extends Controller {
         order.setEndDate(Utils.getCurrentDateTime());
 
         return order;
-    }
-
-    @Override
-    public Order get(int id) {
-        int index = this.getById(id);
-
-        return this.getByIndex(index);
     }
 
     @Override
@@ -98,7 +85,7 @@ public class OrderController extends Controller {
     }
 
     public int getVehicle(String licensePlate) {
-        return this.vehicleController.getByLicense_plate(licensePlate);
+        return this.vehicleController.getByLicensePlate(licensePlate);
     }
 
     public int getVehicle(int index) {
@@ -142,5 +129,16 @@ public class OrderController extends Controller {
     public void initData() {
         this.save(new Order(this.modelSize(), "Preventivo 10000km", 1, 1, 1, 1, "Preventivo", "2023-01-15 13:25", "2023-01-15 18:25", 9850));
         this.save(new Order(this.modelSize(), "Correctivo Supension", 2, 3, 2, 2, "Correctivo", "2023-04-15 09:25", "2023-04-15 15:32", 67836));
+    }
+
+    public int getNameSize() {
+        int size = 0;
+        for (Order order : this.getOrders()) {
+            if (order.getNombre().length() > size) {
+                size = order.getNombre().length();
+            }
+        }
+
+        return size;
     }
 }
