@@ -1,14 +1,42 @@
-import TallerVehiculo.Bahia;
-import TallerVehiculo.Mecanico;
-import TallerVehiculo.OrdenServicio;
-import TallerVehiculo.Producto;
-import TallerVehiculo.Services.Screen;
+import Controllers.*;
+import Models.*;
+import Services.Screen;
+import Views.*;
 
 public class Main {
 
     public static void main(String[] args) {
-        Producto producto = new Producto();
-        Mecanico mecanico = new Mecanico();
+        Product product = new Product();
+        ProductView productView = new ProductView();
+        ProductController productController = new ProductController(product, productView);
+
+        Professional professional = new Professional();
+        ProfessionalView professionalView = new ProfessionalView();
+        ProfessionalController professionalController = new ProfessionalController(professional, professionalView);
+
+        Bay bay = new Bay();
+        BayView bayView = new BayView();
+        BayController bayController = new BayController(bay, bayView);
+
+        Client client = new Client();
+        ClientView clientView = new ClientView();
+        ClientController clientController = new ClientController(client, clientView);
+
+        Car car = new Car();
+        CarView carView = new CarView();
+        CarController carController = new CarController(car, carView);
+
+        Order order = new Order();
+        OrderView orderView = new OrderView();
+        OrderController orderController = new OrderController(order, orderView);
+        orderController.setControllers(clientController, professionalController, bayController, carController,productController);
+
+        productView.setController(productController);
+
+        // Establecer los controladores en la vista de órdenes
+        orderView.setController(orderController);
+        orderView.setProductController(productController);
+        orderView.setProfessionalController(professionalController);
         Screen sc = new Screen();
 
         sc.printTitulo("Bienvenido al Gestor del Taller");
@@ -19,33 +47,46 @@ public class Main {
 
         while (!salir) {
             sc.printTitulo("Menú Principal");
-            sc.printSubtitulo("1. Producto");
-            sc.printSubtitulo("2. Mecanico");
-            sc.printSubtitulo("3. Bahia");
-            sc.printSubtitulo("4. Orden de Servicio");
-            sc.printSubtitulo("5. Salir");
+            sc.printSubtitulo("1. Gestión de Órdenes");;
+            sc.printSubtitulo("2. Gestión de Productos");
+            sc.printSubtitulo("3. Gestión de Profesionales");
+            sc.printSubtitulo("4. Gestión de Bahias");
+            sc.printSubtitulo("5. Gestión de Clientes");
+            sc.printSubtitulo("6. Gestión de Autos");
+            sc.printSubtitulo("7. Salir");
             int opcion = sc.getInt("   Ingrese una opción: ");
 
             switch (opcion) {
                 case 1:
-                    producto.iniciarMenu();
+                    orderController.initializeMenu();
                     break;
                 case 2:
-                    mecanico.iniciarMenu();
+                    productController.initializeMenu();
                     break;
                 case 3:
-                    Bahia.ejecutarBahia();
+                    professionalController.initializeMenu();
                     break;
                 case 4:
-                    OrdenServicio.ejecutarOrdenServicio();
+                    bayController.initializeMenu();
                     break;
                 case 5:
+                    clientController.initializeMenu();
+                    break;
+                case 6:
+                    carController.initializeMenu();
+                    break;
+                case 7:
                     salir = true;
                     break;
                 case 9:
-                    producto.iniciarData();
-                    mecanico.iniciarData();
-                    sc.printCorrecto("Data Inicializada");
+                    productController.initData();
+                    professionalController.initData();
+                    bayController.initData();
+                    clientController.initData();
+                    carController.initData();
+                    orderController.initData();
+
+                    sc.printCorrecto("   Data Inicializada");
                     break;
                 default:
                     sc.printAlerta("Opción inválida");

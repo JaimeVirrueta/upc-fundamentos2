@@ -1,4 +1,4 @@
-package TallerVehiculo.Services;
+package Services;
 
 import java.util.Scanner;
 
@@ -20,9 +20,12 @@ public class Screen {
         System.out.println(this.getVerde(texto));
     }
 
-
     public String getVerde(String texto){
         return "\u001B[32m" + texto + "\u001B[0m";
+    }
+
+    public String getCian(String texto){
+        return "\u001B[36m" + texto + "\u001B[0m";
     }
 
     public void printAlerta(String texto){
@@ -30,7 +33,7 @@ public class Screen {
     }
 
     public void printCorrecto(String texto){
-        System.out.println("\u001B[36m" + texto + "\u001B[0m");
+        System.out.println(this.getCian(texto));
     }
 
     public void printInput(String text){
