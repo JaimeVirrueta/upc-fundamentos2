@@ -56,7 +56,7 @@ public class CustomerView extends View{
         );
 
         input.printCorrecto("Cliente creado correctamente");
-        tbl.printTable(customer);
+        render.printTable(customer);
     }
     @Override
     public void index() {
@@ -64,7 +64,7 @@ public class CustomerView extends View{
         if (this.controller.getCustomers().size() == 0) {
             input.printAlerta("No hay clientes registrados");
         } else {
-            tbl.printTable(this.controller.getCustomers(), this.controller);
+            render.printTable(this.controller.getCustomers(), this.controller);
         }
     }
 
@@ -78,7 +78,7 @@ public class CustomerView extends View{
             Customer customer = this.controller.getByIndex(index);
 
             input.printCorrecto("Cliente encontrado:");
-            tbl.printTable(customer);
+            render.printTable(customer);
 
             customer.setName(this.inputName());
             customer.setPhone(this.inputPhone());
@@ -97,7 +97,7 @@ public class CustomerView extends View{
             Customer customer = (Customer) this.controller.get(code);
 
             input.printCorrecto("Cliente encontrado: ");
-            tbl.printTable(customer);
+            render.printTable(customer);
 
             this.controller.delete(code);
 

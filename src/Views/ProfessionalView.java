@@ -55,7 +55,7 @@ public class ProfessionalView extends View{
         );
 
         input.printCorrecto("Profesional creado correctamente.");
-        tbl.printTable(professional);
+        render.printTable(professional);
     }
 
     @Override
@@ -64,7 +64,7 @@ public class ProfessionalView extends View{
         if (this.controller.getProfessionals().size() == 0) {
             input.printAlerta("No hay profesionales registrados.");
         } else {
-            tbl.printTable(this.controller.getProfessionals(), this.controller);
+            render.printTable(this.controller.getProfessionals(), this.controller);
         }
     }
 
@@ -78,7 +78,7 @@ public class ProfessionalView extends View{
             Professional professional = this.controller.getByIndex(index);
 
             input.printCorrecto("Profesional encontrado:");
-            tbl.printTable(professional);
+            render.printTable(professional);
 
             professional.setName(this.inputName());
             professional.setProfession(this.inputProfession());
@@ -98,7 +98,7 @@ public class ProfessionalView extends View{
             Professional professional = (Professional) this.controller.get(code);
 
             input.printCorrecto("Profesional encontrado:");
-            tbl.printTable(professional);
+            render.printTable(professional);
 
             this.controller.delete(code);
 

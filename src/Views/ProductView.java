@@ -66,7 +66,7 @@ public class ProductView extends View{
         if (this.controller.getProducts().size() == 0) {
             input.printAlerta("No hay productos en la lista");
         } else {
-            tbl.printTable(this.controller.getProducts(), this.controller);
+            render.printTable(this.controller.getProducts(), this.controller);
         }
     }
 
@@ -80,7 +80,7 @@ public class ProductView extends View{
             Product product = this.controller.getByIndex(index);
 
             input.printCorrecto("Producto encontrado:");
-            tbl.printTable(product);
+            render.printTable(product);
 
             product.setName(this.inputName());
             product.setSku(this.inputSku());
@@ -102,7 +102,7 @@ public class ProductView extends View{
             Product product = (Product) this.controller.get(code);
 
             input.printCorrecto("Producto encontrado:");
-            tbl.printTable(product);
+            render.printTable(product);
 
             this.controller.delete(code);
 

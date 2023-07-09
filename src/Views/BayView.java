@@ -55,7 +55,7 @@ public class BayView extends View{
         );
 
         input.printCorrecto("Bahia creada correctamente");
-        input.print(this.toString(bay));
+        render.printTable(bay);
     }
 
     @Override
@@ -64,7 +64,7 @@ public class BayView extends View{
         if (this.controller.getBays().size() == 0) {
             input.printAlerta("No hay bahias en la lista");
         } else {
-            tbl.printTable(this.controller.getBays(), this.controller);
+            render.printTable(this.controller.getBays(), this.controller);
         }
     }
 
@@ -78,7 +78,7 @@ public class BayView extends View{
             Bay bay = this.controller.getByIndex(index);
 
             input.printCorrecto("Bahia encontrado:");
-            tbl.printTable(bay);
+            render.printTable(bay);
 
             bay.setName(this.inputName());
             bay.setLocal(this.getLocal());
@@ -98,7 +98,7 @@ public class BayView extends View{
             Bay bay = (Bay) this.controller.get(code);
 
             input.printCorrecto("Bahia encontrada: ");
-            tbl.printTable(bay);
+            render.printTable(bay);
 
             this.controller.delete(code);
 

@@ -1,13 +1,13 @@
 package Views;
 
 import Services.Input;
-import Services.Table;
+import Services.Render;
 
 abstract public class View {
 
     protected Input input = new Input();
 
-    protected Table tbl = new Table();
+    protected Render render = new Render();
 
     public int menuOption = 0;
 

@@ -1,13 +1,29 @@
 package Services;
 
-import Controllers.ProfessionalController;
-import Models.Professional;
+import Controllers.*;
+import Models.*;
 
 import java.util.ArrayList;
 
-public class Table {
+public class Render {
 
     public Input sc = new Input();
+
+    public void printTable(ArrayList<Order> orders, OrderController controller) {
+
+    }
+
+    public void printTable(Order order) {
+
+    }
+
+    public void printTable(ArrayList<Product> products, ProductController controller) {
+
+    }
+
+    public void printTable(Product product) {
+
+    }
 
     public void printTable(ArrayList<Professional> professionals, ProfessionalController controller) {
         int size = controller.getNameSize();
@@ -45,6 +61,31 @@ public class Table {
         sc.print(String.format("| %-6s | %-" + size + "s | %-13s |", id + "", name, profession));
         sc.print(line);
     }
+
+    public void printTable(ArrayList<Bay> bays, BayController controller) {
+
+    }
+
+    public void printTable(Bay bay) {
+
+    }
+
+    public void printTable(ArrayList<Customer> customers, CustomerController controller) {
+
+    }
+
+    public void printTable(Customer customer) {
+
+    }
+
+    public void printTable(ArrayList<Vehicle> vehicles, VehicleController controller) {
+
+    }
+
+    public void printTable(Vehicle vehicle) {
+
+    }
+
 
     private String fill(String texto, int longitudTotal, String relleno) {
         return String.format("%" + longitudTotal + "s", texto).replace(' ', relleno.charAt(0));

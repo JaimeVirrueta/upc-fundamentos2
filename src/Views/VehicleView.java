@@ -66,7 +66,7 @@ public class VehicleView extends View{
         if (this.controller.getVehicles().size() == 0) {
             input.printAlerta("No hay autos en la lista");
         } else {
-            tbl.printTable(this.controller.getVehicles(), this.controller);
+            render.printTable(this.controller.getVehicles(), this.controller);
         }
     }
 
