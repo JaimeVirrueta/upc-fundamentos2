@@ -6,13 +6,10 @@ import Views.ProductView;
 import java.util.ArrayList;
 
 public class ProductController extends Controller {
-
     private ArrayList<Product> products = new ArrayList<>();
-    private Product model;
     private ProductView view;
 
-    public ProductController(Product product, ProductView productView) {
-        this.model = product;
+    public ProductController(ProductView productView) {
         this.view = productView;
         this.view.setController(this);
     }
@@ -25,29 +22,23 @@ public class ProductController extends Controller {
         return this.products;
     }
 
+    @Override
     public int modelSize(){
-        return this.products.size();
+        return this.getProducts().size();
     }
 
-    public Product save(String name, String sku, double precio, int stock) {
-        Product product = new Product(this.modelSize(), name, sku, precio, stock);
-        this.products.add(product);
+    public Product save(String name, String sku, double price, int stock) {
+        Product product = new Product(this.modelSize(), name, sku, price, stock);
+        this.getProducts().add(product);
 
         return product;
     }
 
     @Override
-    public Product get(int id) {
-        int index = this.getById(id);
-
-        return this.getByIndex(index);
-    }
-
-    @Override
     public int getById(int id) {
         for (int i = 0; i < this.modelSize(); i++) {
-            Model model = this.products.get(i);
-            if (model.getCodigo() == id) {
+            Model model = this.getProducts().get(i);
+            if (model.getId() == id) {
                 return i;
             }
         }
@@ -57,7 +48,7 @@ public class ProductController extends Controller {
 
     @Override
     public Product getByIndex(int index) {
-        return this.products.get(index);
+        return this.getProducts().get(index);
     }
 
     public int getBySku(String sku) {
@@ -73,9 +64,8 @@ public class ProductController extends Controller {
 
     public void delete(int id) {
         int index = this.getById(id);
-        this.products.remove(index);
+        this.getProducts().remove(index);
     }
-
 
     public void initData() {
         this.save("Aceite Liquimoly 5W30", "ACT001", 250.0, 10);
@@ -84,5 +74,16 @@ public class ProductController extends Controller {
         this.save("Bujias Bosh", "BUJ001", 50.0, 40);
         this.save("Bujias TORCH", "BUJ002", 50.0, 80);
         this.save("Filtro de aire de cabina", "FLT003", 20.0, 10);
+    }
+
+    public int getNameSize() {
+        int size = 0;
+        for (Product products : this.getProducts()) {
+            if (products.getName().length() > size) {
+                size = products.getName().length();
+            }
+        }
+
+        return size;
     }
 }

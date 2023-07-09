@@ -1,35 +1,28 @@
 import Controllers.*;
-import Models.*;
-import Services.Screen;
+import Services.Input;
 import Views.*;
 
 public class Main {
 
     public static void main(String[] args) {
-        Product product = new Product();
         ProductView productView = new ProductView();
-        ProductController productController = new ProductController(product, productView);
+        ProductController productController = new ProductController(productView);
 
-        Professional professional = new Professional();
         ProfessionalView professionalView = new ProfessionalView();
-        ProfessionalController professionalController = new ProfessionalController(professional, professionalView);
+        ProfessionalController professionalController = new ProfessionalController(professionalView);
 
-        Bay bay = new Bay();
         BayView bayView = new BayView();
-        BayController bayController = new BayController(bay, bayView);
+        BayController bayController = new BayController(bayView);
 
-        Client client = new Client();
-        ClientView clientView = new ClientView();
-        ClientController clientController = new ClientController(client, clientView);
+        CustomerView customerView = new CustomerView();
+        CustomerController customerController = new CustomerController(customerView);
 
-        Car car = new Car();
-        CarView carView = new CarView();
-        CarController carController = new CarController(car, carView);
+        VehicleView vehicleView = new VehicleView();
+        VehicleController vehicleController = new VehicleController(vehicleView);
 
-        Order order = new Order();
         OrderView orderView = new OrderView();
-        OrderController orderController = new OrderController(order, orderView);
-        orderController.setControllers(clientController, professionalController, bayController, carController,productController);
+        OrderController orderController = new OrderController(orderView);
+        orderController.setControllers(customerController, professionalController, bayController, vehicleController,productController);
 
         productView.setController(productController);
 
@@ -37,7 +30,7 @@ public class Main {
         orderView.setController(orderController);
         orderView.setProductController(productController);
         orderView.setProfessionalController(professionalController);
-        Screen sc = new Screen();
+        Input sc = new Input();
 
         sc.printTitulo("Bienvenido al Gestor del Taller");
         sc.printCorrecto("===============================");
@@ -70,10 +63,10 @@ public class Main {
                     bayController.initializeMenu();
                     break;
                 case 5:
-                    clientController.initializeMenu();
+                    customerController.initializeMenu();
                     break;
                 case 6:
-                    carController.initializeMenu();
+                    vehicleController.initializeMenu();
                     break;
                 case 7:
                     salir = true;
@@ -82,8 +75,8 @@ public class Main {
                     productController.initData();
                     professionalController.initData();
                     bayController.initData();
-                    clientController.initData();
-                    carController.initData();
+                    customerController.initData();
+                    vehicleController.initData();
                     orderController.initData();
 
                     sc.printCorrecto("   Data Inicializada");

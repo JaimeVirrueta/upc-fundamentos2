@@ -1,15 +1,12 @@
 package Models;
-import java.util.ArrayList;
-import java.util.Scanner;
+
 public class Bay extends Model {
 
     private String local;
 
-    public Bay() { }
-
     public Bay(int id, String name, String local) {
-        super.setCodigo(id);
-        super.setNombre(name);
+        super.setId(id);
+        super.setName(name);
         this.local = local;
     }
 

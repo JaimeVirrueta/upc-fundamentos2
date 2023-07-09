@@ -1,24 +1,21 @@
 package Controllers;
 
 import Models.Model;
-import Models.Product;
 import Models.Professional;
 import Views.ProfessionalView;
 
 import java.util.ArrayList;
 
 public class ProfessionalController extends Controller {
-
     private ArrayList<Professional> professionals = new ArrayList<>();
-    private Professional model;
     private ProfessionalView view;
 
-    public ProfessionalController(Professional model, ProfessionalView view) {
-        this.model = model;
+    public ProfessionalController(ProfessionalView view) {
         this.view = view;
         this.view.setController(this);
     }
 
+    @Override
     public void initializeMenu() {
         this.view.initializeMenu();
     }
@@ -27,30 +24,23 @@ public class ProfessionalController extends Controller {
         return this.professionals;
     }
 
-
+    @Override
     public int modelSize(){
         return this.getProfessionals().size();
     }
 
     public Professional save(String name, String profession) {
         Professional professional = new Professional(this.modelSize(), name, profession);
-        this.professionals.add(professional);
+        this.getProfessionals().add(professional);
 
         return professional;
     }
 
     @Override
-    public Professional get(int id) {
-        int index = this.getById(id);
-
-        return this.getByIndex(index);
-    }
-
-    @Override
     public int getById(int id) {
         for (int i = 0; i < this.modelSize(); i++) {
-            Model model = this.professionals.get(i);
-            if (model.getCodigo() == id) {
+            Model model = this.getProfessionals().get(i);
+            if (model.getId() == id) {
                 return i;
             }
         }
@@ -63,6 +53,7 @@ public class ProfessionalController extends Controller {
         return this.getProfessionals().get(index);
     }
 
+    @Override
     public void delete(int id) {
         int index = this.getById(id);
         this.getProfessionals().remove(index);
@@ -78,8 +69,8 @@ public class ProfessionalController extends Controller {
     public int getNameSize() {
         int size = 0;
         for (Professional professional : this.getProfessionals()) {
-            if (professional.getNombre().length() > size) {
-                size = professional.getNombre().length();
+            if (professional.getName().length() > size) {
+                size = professional.getName().length();
             }
         }
 

@@ -1,7 +1,6 @@
 package Views;
 
 import Controllers.ProductController;
-import Models.Model;
 import Models.Product;
 
 public class ProductView extends View{
@@ -9,54 +8,22 @@ public class ProductView extends View{
 
     public void setController(ProductController controller) {
         this.controller = controller;
+        this.menuOption = 2;
     }
 
-    public String getNombre() {
-        return sc.getString("Ingrese el nombre: ");
-    }
-
-    public String getSku() {
-        String sku = this.sc.getString("Ingrese el código SKU: ");
-
-        return this.validateSku(sku);
-    }
-
-    private String validateSku(String sku) {
-        boolean salir = false;
-        while (!salir) {
-            int indice = this.controller.getBySku(sku);
-            if (indice != -1) {
-                sc.printAlerta("El SKU del producto ya existe");
-
-                sku = this.getSku();
-            } else {
-                salir = true;
-            }
-        }
-
-        return sku;
-    }
-
-    public double getPrecio() {
-        return sc.getDouble("Ingrese el precio: ");
-    }
-
-    public int getStock() {
-        return sc.getInt("Ingrese el stock: ");
-    }
-
+    @Override
     public void initializeMenu() {
         boolean salir = false;
         while (!salir) {
-            sc.printTitulo("Opcion 1 : Gestión de Productos");
-            sc.printSubtitulo("1. Crear producto");
-            sc.printSubtitulo("2. Listar productos");
-            sc.printSubtitulo("3. Actualizar producto");
-            sc.printSubtitulo("4. Eliminar producto");
-            sc.printSubtitulo("5. Salir");
-            int opcion = sc.getInt("   Ingrese una opción: ");
+            input.printTitulo("Opcion "+ this.menuOption +" : Gestión de Productos");
+            input.printSubtitulo("1. Crear");
+            input.printSubtitulo("2. Listar");
+            input.printSubtitulo("3. Actualizar");
+            input.printSubtitulo("4. Eliminar");
+            input.printSubtitulo("0. Salir");
+            this.subMenuOption = input.getInt("   Ingrese una opción: ");
 
-            switch (opcion) {
+            switch (this.subMenuOption) {
                 case 1:
                     this.create();
                     break;
@@ -69,90 +36,121 @@ public class ProductView extends View{
                 case 4:
                     this.delete();
                     break;
-                case 5:
+                case 0:
                     salir = true;
                     break;
                 default:
-                    sc.printAlerta("Opción inválida");
+                    input.printAlerta("Opción inválida");
             }
         }
     }
 
     @Override
     public void create(){
-        sc.printTitulo("Opción 1.1: Creación de Producto");
+        input.printTitulo(this.subTitle("Creación de Producto."));
 
-        String nombre = this.getNombre();
-        String sku = this.getSku();
-        double precio = this.getPrecio();
-        int stock = this.getStock();
-        Product product = this.controller.save(nombre, sku, precio, stock);
+        Product product = this.controller.save(
+                this.inputName(),
+                this.inputSku(),
+                this.inputPrice(),
+                this.inputStock()
+        );
 
-        sc.printCorrecto("Producto agregado correctamente");
-        sc.print(this.toString(product));
+        input.printCorrecto("Producto creado correctamente");
+        input.print(this.toString(product));
     }
 
     @Override
     public void index() {
-        sc.printTitulo("Opción 1.2: Listado de Productos");
+        input.printTitulo(this.subTitle("Listado de Productos."));
         if (this.controller.getProducts().size() == 0) {
-            sc.printAlerta("No hay productos en la lista");
+            input.printAlerta("No hay productos en la lista");
         } else {
-            for (Product product : this.controller.getProducts()) {
-                sc.print(this.toString(product));
-            }
+            tbl.printTable(this.controller.getProducts(), this.controller);
         }
     }
 
     @Override
     public void update() {
-        sc.printTitulo("Opción 1.3: Gestión de Producto");
-        int codigo = sc.getInt("Ingrese el código del producto a actualizar: ");
+        input.printTitulo(this.subTitle("Gestión del Producto."));
+        int code = input.getInt("Ingrese el código: ");
 
-        int index = this.controller.getById(codigo);
+        int index = this.controller.getById(code);
         if (index != -1) {
             Product product = this.controller.getByIndex(index);
 
-            sc.printCorrecto("Producto encontrado:");
-            sc.print(this.toString(product));
+            input.printCorrecto("Producto encontrado:");
+            tbl.printTable(product);
 
-            product.setNombre(this.getNombre());
-            product.setSku(this.getSku());
-            product.setPrecio(this.getPrecio());
-            product.setStock(this.getStock());
+            product.setName(this.inputName());
+            product.setSku(this.inputSku());
+            product.setPrice(this.inputPrice());
+            product.setStock(this.inputStock());
 
-            sc.printCorrecto("Producto actualizado correctamente");
+            input.printCorrecto("Producto actualizado correctamente");
         } else {
-            sc.printAlerta("Producto no encontrado");
+            input.printAlerta("Producto no encontrado");
         }
     }
 
     @Override
     public void delete() {
-        sc.printTitulo("Opción 1.4: Eliminación de Producto");
-        int code = sc.getInt("Ingrese el código del producto a eliminar: ");
+        input.printTitulo(this.subTitle("Eliminación de Producto"));
+        int code = input.getInt("Ingrese el código: ");
 
         try {
-            Product product = this.controller.get(code);
+            Product product = (Product) this.controller.get(code);
 
-            sc.printCorrecto("Producto encontrado:");
-            sc.print(this.toString(product));
+            input.printCorrecto("Producto encontrado:");
+            tbl.printTable(product);
 
             this.controller.delete(code);
 
         } catch (Exception e) {
-            sc.printAlerta("Producto no encontrado");
+            input.printAlerta("Producto no encontrado");
         }
     }
 
+    /**
+     * Entrada de datos
+     */
 
-    public String toString(Model model) {
-        Product product = (Product) model;
-
-        return super.sc.getVerde("Código: ")  + product.getCodigo()
-            + super.sc.getVerde(", SKU: ") + product.getSku()
-            + super.sc.getVerde(", Nombre: ") + product.getNombre()
-            + super.sc.getVerde(", Stock: ") + product.getStock()
-            + super.sc.getVerde(", Precio: ") + product.getPrecio();
+    public String inputName() {
+        return input.getString("Ingrese el nombre: ");
     }
+
+    public String inputSku() {
+        String sku = this.input.getString("Ingrese el código SKU: ");
+
+        return this.validateSku(sku);
+    }
+
+    public double inputPrice() {
+        return input.getDouble("Ingrese el precio: ");
+    }
+
+    public int inputStock() {
+        return input.getInt("Ingrese el stock: ");
+    }
+
+    /**
+     * Validaciones
+     */
+
+    private String validateSku(String sku) {
+        boolean salir = false;
+        while (!salir) {
+            int indice = this.controller.getBySku(sku);
+            if (indice != -1) {
+                input.printAlerta("El SKU del producto ya existe");
+
+                sku = this.inputSku();
+            } else {
+                salir = true;
+            }
+        }
+
+        return sku;
+    }
+
 }

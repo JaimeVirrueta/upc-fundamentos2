@@ -1,18 +1,18 @@
 package Models;
 
 public class Product extends Model {
+
     private String sku;
-    private Double precio;
+
+    private Double price;
+
     private int stock;
 
-    public Product() {
-    }
-
-    public Product(int id, String nombre, String sku, Double precio, Integer stock) {
-        super.setCodigo(id);
-        super.setNombre(nombre);
+    public Product(int id, String name, String sku, Double price, Integer stock) {
+        super.setId(id);
+        super.setName(name);
         this.setSku(sku);
-        this.setPrecio(precio);
+        this.setPrice(price);
         this.setStock(stock);
     }
 
@@ -20,16 +20,16 @@ public class Product extends Model {
         return sku;
     }
 
-    public void setSku(String nombre) {
-        this.sku = nombre;
+    public void setSku(String sku) {
+        this.sku = sku;
     }
 
-    public Double getPrecio() {
-        return precio;
+    public Double getPrice() {
+        return price;
     }
 
-    public void setPrecio(Double precio) {
-        this.precio = precio;
+    public void setPrice(Double price) {
+        this.price = price;
     }
 
     public int getStock() {

@@ -2,11 +2,11 @@ package Services;
 
 import java.util.Scanner;
 
-public class Screen {
+public class Input {
 
     Scanner sc = new Scanner(System.in);
 
-    public Screen(){};
+    public Input(){};
 
     public void print(String texto){
         System.out.println(texto);

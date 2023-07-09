@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 public class Table {
 
-    public Screen sc = new Screen();
+    public Input sc = new Input();
 
     public void printTable(ArrayList<Professional> professionals, ProfessionalController controller) {
         int size = controller.getNameSize();
@@ -20,8 +20,8 @@ public class Table {
         sc.print(line);
 
         for (Professional professional : professionals) {
-            int id = professional.getCodigo();
-            String name = professional.getNombre();
+            int id = professional.getId();
+            String name = professional.getName();
             String profession = professional.getProfession();
 
             sc.print(String.format("| %-6s | %-" + size + "s | %-13s |", id + "", name, profession));
@@ -31,7 +31,7 @@ public class Table {
     }
 
     public void printTable(Professional professional) {
-        int size = professional.getNombre().length();
+        int size = professional.getName().length();
         size = Math.max(size, 6);
 
         String line = "+" + this.dashes(8) + "+" + this.dashes(size + 2) + "+" + this.dashes(15) + "+";
@@ -39,8 +39,8 @@ public class Table {
         sc.print(line);
         sc.print(String.format("| %-6s | %-" + size + "s | %-13s |", "Código", "Nombre", "Profesión"));
         sc.print(line);
-        int id = professional.getCodigo();
-        String name = professional.getNombre();
+        int id = professional.getId();
+        String name = professional.getName();
         String profession = professional.getProfession();
         sc.print(String.format("| %-6s | %-" + size + "s | %-13s |", id + "", name, profession));
         sc.print(line);

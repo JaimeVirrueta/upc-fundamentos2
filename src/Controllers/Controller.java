@@ -1,16 +1,19 @@
 package Controllers;
 
 import Models.Model;
-import Models.Product;
-import Views.ProductView;
-
-import java.util.ArrayList;
+import Models.Professional;
 
 abstract public class Controller {
 
     public abstract void initializeMenu();
 
-    public abstract Model get(int id);
+    public Model get(int id) {
+        int index = this.getById(id);
+
+        return this.getByIndex(index);
+    }
+
+    public abstract int modelSize();
 
     public abstract int getById(int id);
 
