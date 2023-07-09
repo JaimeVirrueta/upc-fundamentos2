@@ -101,19 +101,4 @@ public class Order extends Model {
         this.mileage = mileage;
     }
 
-
-
-
-
-
-
-
-
-
-/*
-
-    public Double calcularPrecioTotal(){
-        Double precioTotal=0.0;
-        return precioTotal= subTotal +(subTotal *igv);
-    */
 }

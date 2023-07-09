@@ -56,6 +56,12 @@ public class OrderController extends Controller {
         return order;
     }
 
+    public Order closeOrder(Order order) {
+        order.setEndDate(Utils.getCurrentDateTime());
+
+        return order;
+    }
+
     @Override
     public Order get(int id) {
         int index = this.getById(id);
@@ -77,13 +83,13 @@ public class OrderController extends Controller {
 
     @Override
     public Order getByIndex(int index) {
-        return this.orders.get(index);
+        return this.getOrders().get(index);
     }
 
     @Override
     public void delete(int id) {
         int index = this.getById(id);
-        this.orders.remove(index);
+        this.getOrders().remove(index);
     }
 
     public int getVehicle(String licensePlate) {
@@ -95,9 +101,7 @@ public class OrderController extends Controller {
     }
 
     public String getVehicle(Order order) {
-        Car car = this.vehicleController.get(order.getVehicleId());
-
-        return car.getNombre();
+        return this.vehicleController.get(order.getVehicleId()).getNombre();
     }
 
     public int getCustomer(int customerId) {

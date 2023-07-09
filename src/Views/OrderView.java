@@ -137,12 +137,15 @@ public class OrderView extends View{
                     this.show();
                     break;
                 case 4:
-                    this.update();
+                    this.closeOrder();
                     break;
                 case 5:
-                    this.delete();
+                    this.update();
                     break;
                 case 6:
+                    this.delete();
+                    break;
+                case 7:
                     salir = true;
                     break;
                 default:
@@ -210,24 +213,39 @@ public class OrderView extends View{
         }
     }
 
-    @Override
-    public void delete() {
-        /*
-        sc.printTitulo(this.subTitle("Eliminación de Producto"));
-        int code = sc.getInt("Ingrese el código del producto a eliminar: ");
+    public void closeOrder() {
+        sc.printTitulo(this.subTitle("Finalizar Orden de Trabajo"));
+        int code = sc.getInt("Ingrese el código: ");
 
         try {
-            Product product = this.controller.get(code);
+            Order order = this.controller.get(code);
 
-            sc.printCorrecto("Producto encontrado:");
-            sc.print(this.toString(product));
+            sc.printCorrecto("OT encontrada:");
+            sc.print(this.toString(order));
+
+            this.controller.closeOrder(order);
+
+        } catch (Exception e) {
+            sc.printAlerta("Producto no encontrado");
+        }
+    }
+
+    @Override
+    public void delete() {
+        sc.printTitulo(this.subTitle("Eliminación de Orden de Trabajo"));
+        int code = sc.getInt("Ingrese el código de la OT a eliminar: ");
+
+        try {
+            Order order = this.controller.get(code);
+
+            sc.printCorrecto("OT encontrada:");
+            sc.print(this.toString(order));
 
             this.controller.delete(code);
 
         } catch (Exception e) {
             sc.printAlerta("Producto no encontrado");
         }
-        */
     }
 
     @Override
