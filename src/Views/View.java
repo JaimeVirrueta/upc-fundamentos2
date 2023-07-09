@@ -1,18 +1,16 @@
 package Views;
 
-import Controllers.Controller;
-import Models.Model;
-import Models.Order;
-import Services.Screen;
+import Services.Input;
 import Services.Table;
 
-import java.util.ArrayList;
-
 abstract public class View {
-    protected Screen sc = new Screen();
+
+    protected Input input = new Input();
+
     protected Table tbl = new Table();
 
-    public int menuOption = 1;
+    public int menuOption = 0;
+
     public int subMenuOption = 0;
 
     public abstract void initializeMenu();
@@ -28,4 +26,5 @@ abstract public class View {
     public String subTitle(String txt) {
         return "Opción " + this.menuOption + "." + this.subMenuOption + ": " + txt;
     }
+
 }

@@ -2,15 +2,15 @@ package Controllers;
 
 import Models.Customer;
 import Models.Model;
-import Views.ClientView;
+import Views.CustomerView;
 
 import java.util.ArrayList;
 
 public class CustomerController extends Controller{
     private ArrayList<Customer> customers = new ArrayList<>();
-    private ClientView view;
+    private CustomerView view;
 
-    public CustomerController(ClientView view) {
+    public CustomerController(CustomerView view) {
         this.view = view;
         this.view.setController(this);
     }

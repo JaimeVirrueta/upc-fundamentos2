@@ -2,54 +2,28 @@ package Views;
 
 import Controllers.BayController;
 import Models.Bay;
-import Models.Model;
-import Models.Product;
 
 public class BayView extends View{
     private BayController controller;
 
     public void setController(BayController controller) {
         this.controller = controller;
+        this.menuOption = 4;
     }
 
-    public String getNombre() {
-        String name = sc.getString("Ingrese el nombre: ");
-
-        return this.validateName(name);
-    }
-
-    public String getLocal() {
-        return this.sc.getString("Ingrese el Local: ");
-    }
-
-    private String validateName(String name) {
-        boolean salir = false;
-        while (!salir) {
-            int indice = this.controller.getByName(name);
-            if (indice != -1) {
-                sc.printAlerta("El Nombre '" + name + "' ya está registrado");
-
-                name = this.getNombre();
-            } else {
-                salir = true;
-            }
-        }
-
-        return name;
-    }
-
+    @Override
     public void initializeMenu() {
         boolean salir = false;
         while (!salir) {
-            sc.printTitulo("Opcion 1 : Gestión de Bahias");
-            sc.printSubtitulo("1. Crear bahia");
-            sc.printSubtitulo("2. Listar bahias");
-            sc.printSubtitulo("3. Actualizar bahia");
-            sc.printSubtitulo("4. Eliminar bahia");
-            sc.printSubtitulo("5. Salir");
-            int opcion = sc.getInt("   Ingrese una opción: ");
+            input.printTitulo("Opcion "+ this.menuOption +" : Gestión de Bahias");
+            input.printSubtitulo("1. Crear");
+            input.printSubtitulo("2. Listar");
+            input.printSubtitulo("3. Actualizar");
+            input.printSubtitulo("4. Eliminar");
+            input.printSubtitulo("5. Salir");
+            this.subMenuOption = input.getInt("   Ingrese una opción: ");
 
-            switch (opcion) {
+            switch (this.subMenuOption) {
                 case 1:
                     this.create();
                     break;
@@ -62,85 +36,105 @@ public class BayView extends View{
                 case 4:
                     this.delete();
                     break;
-                case 5:
+                case 0:
                     salir = true;
                     break;
                 default:
-                    sc.printAlerta("Opción inválida");
+                    input.printAlerta("Opción inválida");
             }
         }
     }
 
     @Override
     public void create(){
-        sc.printTitulo("Opción 1.1: Creación de Bahia");
+        input.printTitulo(this.subTitle("Creación de Bahia."));
 
         Bay bay = this.controller.save(
-            this.getNombre(),
-            this.getLocal()
+                this.inputName(),
+                this.getLocal()
         );
 
-        sc.printCorrecto("Bahia agregada correctamente");
-        sc.print(this.toString(bay));
+        input.printCorrecto("Bahia creada correctamente");
+        input.print(this.toString(bay));
     }
 
     @Override
     public void index() {
-        sc.printTitulo("Opción 1.2: Listado de Bahias");
+        input.printTitulo(this.subTitle("Listado de Bahias."));
         if (this.controller.getBays().size() == 0) {
-            sc.printAlerta("No hay bahias en la lista");
+            input.printAlerta("No hay bahias en la lista");
         } else {
-            for (Bay bay : this.controller.getBays()) {
-                sc.print(this.toString(bay));
-            }
+            tbl.printTable(this.controller.getBays(), this.controller);
         }
     }
 
     @Override
     public void update() {
-        sc.printTitulo("Opción 1.3: Gestión de Bahia");
-        int codigo = sc.getInt("Ingrese el código de la bahia a actualizar: ");
+        input.printTitulo(this.subTitle("Gestión de Bahia."));
+        int code = input.getInt("Ingrese el código: ");
 
-        int index = this.controller.getById(codigo);
+        int index = this.controller.getById(code);
         if (index != -1) {
             Bay bay = this.controller.getByIndex(index);
 
-            sc.printCorrecto("Bahia encontrado:");
-            sc.print(this.toString(bay));
+            input.printCorrecto("Bahia encontrado:");
+            tbl.printTable(bay);
 
-            bay.setNombre(this.getNombre());
+            bay.setName(this.inputName());
             bay.setLocal(this.getLocal());
 
-            sc.printCorrecto("Bahia actualizado correctamente");
+            input.printCorrecto("Bahia actualizado correctamente");
         } else {
-            sc.printAlerta("Bahia no encontrado");
+            input.printAlerta("Bahia no encontrada");
         }
     }
 
     @Override
     public void delete() {
-        sc.printTitulo("Opción 1.4: Eliminación de Bahia");
-        int code = sc.getInt("Ingrese el código de la bahia a eliminar: ");
+        input.printTitulo(this.subTitle("Eliminación de Bahia"));
+        int code = input.getInt("Ingrese el código: ");
 
         try {
-            Bay bay = this.controller.get(code);
+            Bay bay = (Bay) this.controller.get(code);
 
-            sc.printCorrecto("Bahia encontrada: ");
-            sc.print(this.toString(bay));
+            input.printCorrecto("Bahia encontrada: ");
+            tbl.printTable(bay);
 
             this.controller.delete(code);
 
         } catch (Exception e) {
-            sc.printAlerta("Bahia no encontrado");
+            input.printAlerta("Bahia no encontrado");
         }
     }
 
+    /**
+     * Entrada de datos
+     */
 
-    public String toString(Model model) {
-        Bay bay = (Bay) model;
+    public String inputName() {
+        return this.validateName(input.getString("Ingrese el nombre: "));
+    }
 
-        return super.sc.getVerde("Código: ")  + bay.getCodigo()
-            + super.sc.getVerde(", Nombre: ") + bay.getNombre()
-            + super.sc.getVerde(", Local: ") + bay.getLocal();
+    /**
+     * Validaciones
+     */
+
+    private String validateName(String name) {
+        boolean salir = false;
+        while (!salir) {
+            int indice = this.controller.getByName(name);
+            if (indice != -1) {
+                input.printAlerta("El Nombre '" + name + "' ya está registrado");
+                name = this.inputName();
+            } else {
+                salir = true;
+            }
+        }
+
+        return name;
+    }
+
+    public String getLocal() {
+        return this.input.getString("Ingrese el Local: ");
     }
 }

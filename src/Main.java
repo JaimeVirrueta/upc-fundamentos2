@@ -1,6 +1,5 @@
 import Controllers.*;
-import Models.*;
-import Services.Screen;
+import Services.Input;
 import Views.*;
 
 public class Main {
@@ -15,8 +14,8 @@ public class Main {
         BayView bayView = new BayView();
         BayController bayController = new BayController(bayView);
 
-        ClientView clientView = new ClientView();
-        CustomerController customerController = new CustomerController(clientView);
+        CustomerView customerView = new CustomerView();
+        CustomerController customerController = new CustomerController(customerView);
 
         VehicleView vehicleView = new VehicleView();
         VehicleController vehicleController = new VehicleController(vehicleView);
@@ -31,7 +30,7 @@ public class Main {
         orderView.setController(orderController);
         orderView.setProductController(productController);
         orderView.setProfessionalController(professionalController);
-        Screen sc = new Screen();
+        Input sc = new Input();
 
         sc.printTitulo("Bienvenido al Gestor del Taller");
         sc.printCorrecto("===============================");
