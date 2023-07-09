@@ -134,8 +134,9 @@ public class OrderView extends View{
             sc.printSubtitulo("3. Gestionar productos");
             sc.printSubtitulo("4. Gestionar profesionales");
             sc.printSubtitulo("5. Actualizar órden de trabajo");
-            sc.printSubtitulo("6. Eliminar órden de trabajo");
-            sc.printSubtitulo("7. Salir");
+            sc.printSubtitulo("6. Finalizar órden de trabajo");
+            sc.printSubtitulo("7. Eliminar órden de trabajo");
+            sc.printSubtitulo("8. Salir");
             this.subMenuOption = sc.getInt("   Ingrese una opción: ");
 
             switch ( this.subMenuOption) {
@@ -152,9 +153,15 @@ public class OrderView extends View{
                     this.manageProfessionals();
                     break;
                 case 5:
-                    this.delete();
+                    this.update();
                     break;
                 case 6:
+                    this.closeOrder();
+                    break;
+                case 7:
+                    this.delete();
+                    break;
+                case 8:
                     salir = true;
                     break;
                 default:
@@ -195,11 +202,6 @@ public class OrderView extends View{
                 sc.print(this.toString(order));
             }
         }
-    }
-
-
-    public void show() {
-
     }
 
     // Metodos add, remove, manage, getIndex de Productos
@@ -374,24 +376,39 @@ public class OrderView extends View{
         }
     }
 
-    @Override
-    public void delete() {
-        /*
-        sc.printTitulo(this.subTitle("Eliminación de Producto"));
-        int code = sc.getInt("Ingrese el código del producto a eliminar: ");
+    public void closeOrder() {
+        sc.printTitulo(this.subTitle("Finalizar Orden de Trabajo"));
+        int code = sc.getInt("Ingrese el código: ");
 
         try {
-            Product product = this.controller.get(code);
+            Order order = this.controller.get(code);
 
-            sc.printCorrecto("Producto encontrado:");
-            sc.print(this.toString(product));
+            sc.printCorrecto("OT encontrada:");
+            sc.print(this.toString(order));
+
+            this.controller.closeOrder(order);
+
+        } catch (Exception e) {
+            sc.printAlerta("Producto no encontrado");
+        }
+    }
+
+    @Override
+    public void delete() {
+        sc.printTitulo(this.subTitle("Eliminación de Orden de Trabajo"));
+        int code = sc.getInt("Ingrese el código de la OT a eliminar: ");
+
+        try {
+            Order order = this.controller.get(code);
+
+            sc.printCorrecto("OT encontrada:");
+            sc.print(this.toString(order));
 
             this.controller.delete(code);
 
         } catch (Exception e) {
             sc.printAlerta("Producto no encontrado");
         }
-        */
     }
 
     @Override
