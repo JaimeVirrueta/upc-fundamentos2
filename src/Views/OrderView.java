@@ -2,9 +2,11 @@ package Views;
 
 import Controllers.OrderController;
 import Controllers.ProductController;
+import Controllers.ProfessionalController;
 import Models.Model;
 import Models.Order;
 import Models.Product;
+import Models.Professional;
 
 import java.util.ArrayList;
 import java.util.stream.Collectors;
@@ -12,6 +14,7 @@ import java.util.stream.Collectors;
 public class OrderView extends View{
     private OrderController controller;
     private ProductController productController;
+    private ProfessionalController professionalController;
     private int menuOption = 1;
     private int subMenuOption = 0;
 
@@ -20,6 +23,9 @@ public class OrderView extends View{
     }
     public void setController(OrderController controller) {
         this.controller = controller;
+    }
+    public void setProfessionalController(ProfessionalController professionalController) {
+        this.professionalController = professionalController;
     }
 
     public String getName() {
@@ -125,8 +131,8 @@ public class OrderView extends View{
             sc.printTitulo("Opcion " + this.menuOption + " : Gestión de órdenes de Trabajo.");
             sc.printSubtitulo("1. Crear órden de trabajo");
             sc.printSubtitulo("2. Listar órden de trabajos");
-            sc.printSubtitulo("3. Gestionar órden de trabajo");
-            sc.printSubtitulo("4. Cerrar órden de trabajo");
+            sc.printSubtitulo("3. Gestionar productos");
+            sc.printSubtitulo("4. Gestionar profesionales");
             sc.printSubtitulo("5. Actualizar órden de trabajo");
             sc.printSubtitulo("6. Eliminar órden de trabajo");
             sc.printSubtitulo("7. Salir");
@@ -143,7 +149,7 @@ public class OrderView extends View{
                     this.manageProducts();
                     break;
                 case 4:
-                    this.update();
+                    this.manageProfessionals();
                     break;
                 case 5:
                     this.delete();
@@ -195,6 +201,8 @@ public class OrderView extends View{
     public void show() {
 
     }
+
+    // Metodos add, remove, manage, getIndex de Productos
     public void addProduct(Order order) {
         int codigo = sc.getInt("Ingrese el código del producto a agregar: ");
         int index = productController.getById(codigo);
@@ -269,6 +277,82 @@ public class OrderView extends View{
         return -1;
     }
 
+    // Metodos add, remove, manage, getIndex de Profesionales
+
+    public void addProfessional(Order order) {
+        int codigo = sc.getInt("Ingrese el código del profesional a agregar: ");
+        int index = professionalController.getById(codigo);
+
+        if (index != -1) {
+            Professional professional = professionalController.getByIndex(index);
+
+            order.addProfessional(professional);
+
+            sc.printCorrecto("profesional agregado a la orden correctamente.");
+        } else {
+            sc.printAlerta("profesional no encontrado.");
+        }
+    }
+
+    public void removeProfessional(Order order) {
+        int codigo = sc.getInt("Ingrese el código del profesional a eliminar: ");
+        int index = getProfessionalIndex(order, codigo);
+
+        if (index != -1) {
+            Professional professional = order.getProfessionals().get(index);
+
+            order.removeProfessional(professional);
+
+            sc.printCorrecto("profesional eliminado de la orden correctamente.");
+        } else {
+            sc.printAlerta("profesional no encontrado.");
+        }
+    }
+
+    public void manageProfessionals() {
+        int codigo = sc.getInt("Ingrese el código de la orden de trabajo: ");
+        int index = controller.getById(codigo);
+
+        if (index != -1) {
+            Order order = controller.getByIndex(index);
+            boolean salir = false;
+            while (!salir) {
+                sc.printTitulo("Gestión de Profesionales de la Orden de Trabajo");
+                sc.printSubtitulo("1. Agregar profesional");
+                sc.printSubtitulo("2. Eliminar profesional");
+                sc.printSubtitulo("3. Volver");
+                int opcion = sc.getInt("Ingrese una opción: ");
+
+                switch (opcion) {
+                    case 1:
+                        addProfessional(order);
+                        break;
+                    case 2:
+                        removeProfessional(order);
+                        break;
+                    case 3:
+                        salir = true;
+                        break;
+                    default:
+                        sc.printAlerta("Opción inválida");
+                }
+            }
+        } else {
+            sc.printAlerta("Orden de trabajo no encontrada.");
+        }
+    }
+
+    private int getProfessionalIndex(Order order, int codigo) {
+        for (int i = 0; i < order.getProfessionals().size(); i++) {
+            Professional professional = order.getProfessionals().get(i);
+            if (professional.getCodigo() == codigo) {
+                return i;
+            }
+        }
+
+        return -1;
+    }
+
     @Override
     public void update() {
         sc.printTitulo(this.subTitle("Actualización de Orden de Trabajo."));
@@ -325,6 +409,16 @@ public class OrderView extends View{
                 .append(super.sc.getVerde(", Fecha de Fin: ")).append(order.getEndDate())
                 .append(super.sc.getVerde("\n           Profesional: ")).append(this.controller.getProfessional(order))
                 .append(super.sc.getVerde(", Bahía: ")).append(this.controller.getBay(order));
+        ArrayList<Professional> professionals = order.getProfessionals();
+        if (!professionals.isEmpty()) {
+            sb.append(super.sc.getVerde("\n           Profesionales:"));
+            for (Professional professional : professionals) {
+                sb.append("\n              ").append(super.sc.getVerde("Código: ")).append(professional.getCodigo())
+                        .append(super.sc.getVerde(", Nombre: ")).append(professional.getNombre());
+            }
+        } else {
+            sb.append("\n              No hay profesionales en esta orden.");
+        }
 
         ArrayList<Product> products = order.getProducts();
         if (!products.isEmpty()) {

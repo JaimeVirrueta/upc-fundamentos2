@@ -36,6 +36,7 @@ public class Main {
         // Establecer los controladores en la vista de órdenes
         orderView.setController(orderController);
         orderView.setProductController(productController);
+        orderView.setProfessionalController(professionalController);
         Screen sc = new Screen();
 
         sc.printTitulo("Bienvenido al Gestor del Taller");
@@ -63,7 +64,7 @@ public class Main {
                     productController.initializeMenu();
                     break;
                 case 3:
-                    orderController.initializeMenu();
+                    professionalController.initializeMenu();
                     break;
                 case 4:
                     bayController.initializeMenu();

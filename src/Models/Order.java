@@ -14,8 +14,12 @@ public class Order extends Model {
     private Double igv = 0.18;
     private ArrayList<Product> products;
 
+    private ArrayList<Professional> professionals;
+
+
     public Order() {
         this.products = new ArrayList<>();
+        this.professionals = new ArrayList<>();
     }
 
     public Order(
@@ -41,9 +45,13 @@ public class Order extends Model {
         this.setEndDate(endDate);
         this.setMileage(mileage);
         this.products = new ArrayList<>();
+        this.professionals = new ArrayList<>();
     }
     public ArrayList<Product> getProducts() {
         return products;
+    }
+    public ArrayList<Professional> getProfessionals() {
+        return professionals;
     }
 
     public void addProduct(Product product) {
@@ -52,6 +60,13 @@ public class Order extends Model {
 
     public void removeProduct(Product product) {
         this.products.remove(product);
+    }
+    public void addProfessional(Professional professional) {
+        this.professionals.add(professional);
+    }
+
+    public void removeProfessional(Professional professional) {
+        this.professionals.remove(professional);
     }
     public int getCustomerId() {
         return this.customerId;

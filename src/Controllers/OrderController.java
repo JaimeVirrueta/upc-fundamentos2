@@ -16,7 +16,6 @@ public class OrderController extends Controller {
     private ProfessionalController professionalController;
     private BayController bayController;
     private CarController vehicleController;
-
     private ProductController productController;
     private ArrayList<Order> orders = new ArrayList<>();
     private Order model;

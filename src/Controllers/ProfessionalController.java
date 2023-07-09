@@ -34,7 +34,7 @@ public class ProfessionalController extends Controller {
 
     public Professional save(String name, String profession) {
         Professional professional = new Professional(this.modelSize(), name, profession);
-        this.getProfessionals().add(professional);
+        this.professionals.add(professional);
 
         return professional;
     }
@@ -49,7 +49,7 @@ public class ProfessionalController extends Controller {
     @Override
     public int getById(int id) {
         for (int i = 0; i < this.modelSize(); i++) {
-            Model model = this.getProfessionals().get(i);
+            Model model = this.professionals.get(i);
             if (model.getCodigo() == id) {
                 return i;
             }
