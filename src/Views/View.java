@@ -4,9 +4,16 @@ import Controllers.Controller;
 import Models.Model;
 import Models.Order;
 import Services.Screen;
+import Services.Table;
+
+import java.util.ArrayList;
 
 abstract public class View {
-    public Screen sc = new Screen();
+    protected Screen sc = new Screen();
+    protected Table tbl = new Table();
+
+    public int menuOption = 1;
+    public int subMenuOption = 0;
 
     public abstract void initializeMenu();
 
@@ -18,5 +25,7 @@ abstract public class View {
 
     abstract public void delete();
 
-    abstract public String toString(Model model);
+    public String subTitle(String txt) {
+        return "Opción " + this.menuOption + "." + this.subMenuOption + ": " + txt;
+    }
 }

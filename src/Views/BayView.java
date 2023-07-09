@@ -135,7 +135,7 @@ public class BayView extends View{
         }
     }
 
-    @Override
+
     public String toString(Model model) {
         Bay bay = (Bay) model;
 

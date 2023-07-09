@@ -1,51 +1,53 @@
 package Views;
 
 import Controllers.ProfessionalController;
-import Models.Model;
 import Models.Professional;
 
 public class ProfessionalView extends View{
     private ProfessionalController controller;
+    private int menuOption = 1;
+    private int subMenuOption = 0;
 
     public void setController(ProfessionalController controller) {
         this.controller = controller;
     }
 
-    public String getNombre() {
+    public String getName() {
         return sc.getString("Ingrese el nombre: ");
     }
 
     public String getProfession() {
-        String valor = sc.getString("Ingrese su especialidad (m) Mecánico  (e) Electricista : ");
+        String valor = sc.getString("Ingrese su especialidad " + sc.getCian("(m) Mecánico  (e) Electricista") + " : ");
 
         return this.validateProfession(valor);
     }
 
-    private String validateProfession(String valor) {
-        if (valor.equals("m")) {
-            valor = "Mecánico";
-        } else if (valor.equals("e")) {
-            valor = "Electricista";
+    private String validateProfession(String value) {
+        if (value.equals("m")) {
+            value = "Mecánico";
+        } else if (value.equals("e")) {
+            value = "Electricista";
         } else {
             sc.printAlerta("El valor ingresado es incorrecto");
-            valor = this.getProfession();
+            value = this.getProfession();
         }
 
-        return valor;
+        return value;
     }
 
+    @Override
     public void initializeMenu() {
-        boolean salir = false;
-        while (!salir) {
+        boolean out = false;
+        while (!out) {
             sc.printTitulo("Opcion 2: Gestión de Profesionales");
             sc.printSubtitulo("1. Crear profesional");
             sc.printSubtitulo("2. Listar profesionales");
             sc.printSubtitulo("3. Actualizar profesional");
             sc.printSubtitulo("4. Eliminar profesional");
             sc.printSubtitulo("5. Salir");
-            int opcion = sc.getInt("   Ingrese una opción: ");
+            this.subMenuOption = sc.getInt("   Ingrese una opción: ");
 
-            switch (opcion) {
+            switch (this.subMenuOption) {
                 case 1:
                     this.create();
                     break;
@@ -59,7 +61,7 @@ public class ProfessionalView extends View{
                     this.delete();
                     break;
                 case 5:
-                    salir = true;
+                    out = true;
                     break;
                 default:
                     sc.printAlerta("Opción inválida");
@@ -69,39 +71,37 @@ public class ProfessionalView extends View{
 
     @Override
     public void create(){
-        sc.printTitulo("Opción 1.1: Creación de Profesional");
+        sc.printTitulo(this.subTitle("Creación de Profesional."));
 
-        Professional professional = this.controller.save(getNombre(), getProfession());
+        Professional professional = this.controller.save(getName(), getProfession());
 
-        sc.printCorrecto("Profesional agregado correctamente");
-        sc.print(this.toString(professional));
+        sc.printCorrecto("Profesional creado correctamente.");
+        tbl.printTable(professional);
     }
 
     @Override
     public void index() {
-        sc.printTitulo("Opción 1.2: Listado de Productos");
+        sc.printTitulo(this.subTitle("Listado de Profesionales."));
         if (this.controller.getProfessionals().size() == 0) {
-            sc.printAlerta("No hay profesionales registrados");
+            sc.printAlerta("No hay profesionales registrados.");
         } else {
-            for (Professional professsional : this.controller.getProfessionals()) {
-                sc.print(this.toString(professsional));
-            }
+            tbl.printTable(this.controller.getProfessionals(), this.controller);
         }
     }
 
     @Override
     public void update() {
-        sc.printTitulo("Opción 1.3: Gestión de Profesional");
-        int codigo = sc.getInt("Ingrese el código del profesional a actualizar: ");
+        sc.printTitulo(this.subTitle("Gestión del Profesional."));
+        int code = sc.getInt("Ingrese el código: ");
 
-        int index = this.controller.getById(codigo);
+        int index = this.controller.getById(code);
         if (index != -1) {
             Professional professional = this.controller.getByIndex(index);
 
             sc.printCorrecto("Profesional encontrado:");
-            sc.print(this.toString(professional));
+            tbl.printTable(professional);
 
-            professional.setNombre(this.getNombre());
+            professional.setNombre(this.getName());
             professional.setProfession(this.getProfession());
 
             sc.printCorrecto("Profesional actualizado correctamente");
@@ -112,14 +112,14 @@ public class ProfessionalView extends View{
 
     @Override
     public void delete() {
-        sc.printTitulo("Opción 1.4: Eliminación de Profesional");
-        int code = sc.getInt("Ingrese el código del profesional a eliminar: ");
+        sc.printTitulo(this.subTitle("Eliminación de Profesional"));
+        int code = sc.getInt("Ingrese el código: ");
 
         try {
             Professional professional = this.controller.get(code);
 
             sc.printCorrecto("Profesional encontrado:");
-            sc.print(this.toString(professional));
+            tbl.printTable(professional);
 
             this.controller.delete(code);
 
@@ -128,12 +128,4 @@ public class ProfessionalView extends View{
         }
     }
 
-    @Override
-    public String toString(Model model) {
-        Professional profesional = (Professional) model;
-
-        return super.sc.getVerde("Código: ")  + profesional.getCodigo()
-            + super.sc.getVerde(", Nombre: ") + profesional.getNombre()
-            + super.sc.getVerde(", Profesión: ") + profesional.getProfession();
-    }
 }

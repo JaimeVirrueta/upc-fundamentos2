@@ -133,7 +133,7 @@ public class CarView extends View{
             sc.printAlerta("Auto no encontrado");
         }
     }
-    @Override
+
     public String toString(Model model) {
         Car car = (Car) model;
 

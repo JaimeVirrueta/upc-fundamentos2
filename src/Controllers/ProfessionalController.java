@@ -74,4 +74,15 @@ public class ProfessionalController extends Controller {
         this.save("Milton", "Electricista");
         this.save("Tio Quijada", "Mecánico");
     }
+
+    public int getNameSize() {
+        int size = 0;
+        for (Professional professional : this.getProfessionals()) {
+            if (professional.getNombre().length() > size) {
+                size = professional.getNombre().length();
+            }
+        }
+
+        return size;
+    }
 }

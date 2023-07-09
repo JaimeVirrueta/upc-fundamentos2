@@ -131,7 +131,7 @@ public class ClientView extends View{
             sc.printAlerta("Cliente no encontrado");
         }
     }
-    @Override
+
     public String toString(Model model) {
         Client client = (Client) model;
 

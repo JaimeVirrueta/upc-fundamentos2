@@ -145,7 +145,7 @@ public class ProductView extends View{
         }
     }
 
-    @Override
+
     public String toString(Model model) {
         Product product = (Product) model;
 

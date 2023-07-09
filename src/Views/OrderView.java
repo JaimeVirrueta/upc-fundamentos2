@@ -139,7 +139,7 @@ public class OrderView extends View{
             sc.printSubtitulo("8. Salir");
             this.subMenuOption = sc.getInt("   Ingrese una opción: ");
 
-            switch ( this.subMenuOption) {
+            switch (this.subMenuOption) {
                 case 1:
                     this.create();
                     break;
@@ -168,10 +168,6 @@ public class OrderView extends View{
                     sc.printAlerta("Opción inválida");
             }
         }
-    }
-
-    private String subTitle(String txt) {
-        return "Opción " + this.menuOption + "." + this.subMenuOption + ": " + txt;
     }
 
     @Override
@@ -411,7 +407,7 @@ public class OrderView extends View{
         }
     }
 
-    @Override
+
     public String toString(Model model) {
         Order order = (Order) model;
 
