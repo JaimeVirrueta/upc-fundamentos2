@@ -2,6 +2,9 @@ package Controllers;
 
 import Models.Model;
 import Models.Product;
+import Views.ProductView;
+
+import java.util.ArrayList;
 
 abstract public class Controller {
 
@@ -15,3 +18,4 @@ abstract public class Controller {
 
     public abstract void delete(int id);
 }
+

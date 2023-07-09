@@ -1,20 +1,26 @@
 package Views;
 
 import Controllers.OrderController;
+import Controllers.ProductController;
 import Models.Model;
 import Models.Order;
 import Models.Product;
 
+import java.util.ArrayList;
+import java.util.stream.Collectors;
+
 public class OrderView extends View{
     private OrderController controller;
-
+    private ProductController productController;
     private int menuOption = 1;
     private int subMenuOption = 0;
 
+    public void setProductController(ProductController productController) {
+        this.productController = productController;
+    }
     public void setController(OrderController controller) {
         this.controller = controller;
     }
-
 
     public String getName() {
         return sc.getString("Ingrese el nombre: ");
@@ -134,7 +140,7 @@ public class OrderView extends View{
                     this.index();
                     break;
                 case 3:
-                    this.show();
+                    this.manageProducts();
                     break;
                 case 4:
                     this.update();
@@ -176,8 +182,8 @@ public class OrderView extends View{
     @Override
     public void index() {
         sc.printTitulo(this.subTitle("Listado de Órdenes de Trabajo"));
-        if (this.controller.getOrders().size() == 0) {
-            sc.printAlerta("No hay Ordenes de trabajo registradas.");
+        if (this.controller.getOrders().isEmpty()) {
+            sc.printAlerta("No hay Órdenes de trabajo registradas.");
         } else {
             for (Order order : this.controller.getOrders()) {
                 sc.print(this.toString(order));
@@ -185,8 +191,82 @@ public class OrderView extends View{
         }
     }
 
+
     public void show() {
 
+    }
+    public void addProduct(Order order) {
+        int codigo = sc.getInt("Ingrese el código del producto a agregar: ");
+        int index = productController.getById(codigo);
+
+        if (index != -1) {
+            Product product = productController.getByIndex(index);
+
+            order.addProduct(product);
+
+            sc.printCorrecto("Producto agregado a la orden correctamente.");
+        } else {
+            sc.printAlerta("Producto no encontrado.");
+        }
+    }
+
+    public void removeProduct(Order order) {
+        int codigo = sc.getInt("Ingrese el código del producto a eliminar: ");
+        int index = getProductIndex(order, codigo);
+
+        if (index != -1) {
+            Product product = order.getProducts().get(index);
+
+            order.removeProduct(product);
+
+            sc.printCorrecto("Producto eliminado de la orden correctamente.");
+        } else {
+            sc.printAlerta("Producto no encontrado.");
+        }
+    }
+
+    public void manageProducts() {
+        int codigo = sc.getInt("Ingrese el código de la orden de trabajo: ");
+        int index = controller.getById(codigo);
+
+        if (index != -1) {
+            Order order = controller.getByIndex(index);
+            boolean salir = false;
+            while (!salir) {
+                sc.printTitulo("Gestión de Productos de la Orden de Trabajo");
+                sc.printSubtitulo("1. Agregar producto");
+                sc.printSubtitulo("2. Eliminar producto");
+                sc.printSubtitulo("3. Volver");
+                int opcion = sc.getInt("Ingrese una opción: ");
+
+                switch (opcion) {
+                    case 1:
+                        addProduct(order);
+                        break;
+                    case 2:
+                        removeProduct(order);
+                        break;
+                    case 3:
+                        salir = true;
+                        break;
+                    default:
+                        sc.printAlerta("Opción inválida");
+                }
+            }
+        } else {
+            sc.printAlerta("Orden de trabajo no encontrada.");
+        }
+    }
+
+    private int getProductIndex(Order order, int codigo) {
+        for (int i = 0; i < order.getProducts().size(); i++) {
+            Product product = order.getProducts().get(i);
+            if (product.getCodigo() == codigo) {
+                return i;
+            }
+        }
+
+        return -1;
     }
 
     @Override
@@ -234,17 +314,28 @@ public class OrderView extends View{
     public String toString(Model model) {
         Order order = (Order) model;
 
-        return super.sc.getVerde("Código: ")  + order.getCodigo()
-            + super.sc.getVerde(", Orden: ") + order.getNombre()
-            + super.sc.getVerde(", Tipo: ") + order.getOrderType()
-            + super.sc.getVerde(", Vehiculo: ") + this.controller.getVehicle(order)
-            + super.sc.getVerde("\n           Kilometraje: ") + order.getMileage()
-            + super.sc.getVerde(", Cliente: ") + this.controller.getCustomer(order)
-            + super.sc.getVerde(", Fecha de Inicio: ") + order.getStartDate()
-            + super.sc.getVerde(", Fecha de Fin: ") + order.getEndDate()
-            + super.sc.getVerde("\n           Profesional: ") + this.controller.getProfessional(order)
-            + super.sc.getVerde(", Bahia: ") + this.controller.getBay(order)
-        ;
-    }
+        StringBuilder sb = new StringBuilder();
+        sb.append(super.sc.getVerde("Código: ")).append(order.getCodigo())
+                .append(super.sc.getVerde(", Orden: ")).append(order.getNombre())
+                .append(super.sc.getVerde(", Tipo: ")).append(order.getOrderType())
+                .append(super.sc.getVerde(", Vehículo: ")).append(this.controller.getVehicle(order))
+                .append(super.sc.getVerde("\n           Kilometraje: ")).append(order.getMileage())
+                .append(super.sc.getVerde(", Cliente: ")).append(this.controller.getCustomer(order))
+                .append(super.sc.getVerde(", Fecha de Inicio: ")).append(order.getStartDate())
+                .append(super.sc.getVerde(", Fecha de Fin: ")).append(order.getEndDate())
+                .append(super.sc.getVerde("\n           Profesional: ")).append(this.controller.getProfessional(order))
+                .append(super.sc.getVerde(", Bahía: ")).append(this.controller.getBay(order));
 
+        ArrayList<Product> products = order.getProducts();
+        if (!products.isEmpty()) {
+            sb.append(super.sc.getVerde("\n           Productos:"));
+            for (Product product : products) {
+                sb.append("\n              ").append(super.sc.getVerde("Código: ")).append(product.getCodigo())
+                        .append(super.sc.getVerde(", Nombre: ")).append(product.getNombre());
+            }
+        } else {
+            sb.append("\n              No hay productos en esta orden.");
+        }
+        return sb.toString();
+    }
 }

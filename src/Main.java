@@ -29,8 +29,13 @@ public class Main {
         Order order = new Order();
         OrderView orderView = new OrderView();
         OrderController orderController = new OrderController(order, orderView);
-        orderController.setControllers(clientController, professionalController, bayController, carController);
+        orderController.setControllers(clientController, professionalController, bayController, carController,productController);
 
+        productView.setController(productController);
+
+        // Establecer los controladores en la vista de órdenes
+        orderView.setController(orderController);
+        orderView.setProductController(productController);
         Screen sc = new Screen();
 
         sc.printTitulo("Bienvenido al Gestor del Taller");
@@ -58,7 +63,7 @@ public class Main {
                     productController.initializeMenu();
                     break;
                 case 3:
-                    professionalController.initializeMenu();
+                    orderController.initializeMenu();
                     break;
                 case 4:
                     bayController.initializeMenu();

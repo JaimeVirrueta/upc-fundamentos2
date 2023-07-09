@@ -1,5 +1,7 @@
 package Models;
 
+import java.util.ArrayList;
+
 public class Order extends Model {
     private int customerId;
     private int vehicleId;
@@ -10,8 +12,11 @@ public class Order extends Model {
     private int mileage;
     private String orderType;
     private Double igv = 0.18;
+    private ArrayList<Product> products;
 
-    public Order() {}
+    public Order() {
+        this.products = new ArrayList<>();
+    }
 
     public Order(
             int id,
@@ -35,8 +40,19 @@ public class Order extends Model {
         this.setStartDate(startDate);
         this.setEndDate(endDate);
         this.setMileage(mileage);
+        this.products = new ArrayList<>();
+    }
+    public ArrayList<Product> getProducts() {
+        return products;
     }
 
+    public void addProduct(Product product) {
+        this.products.add(product);
+    }
+
+    public void removeProduct(Product product) {
+        this.products.remove(product);
+    }
     public int getCustomerId() {
         return this.customerId;
     }
@@ -100,8 +116,6 @@ public class Order extends Model {
     public void setMileage(int mileage) {
         this.mileage = mileage;
     }
-
-
 
 
 

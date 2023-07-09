@@ -3,17 +3,21 @@ package Controllers;
 import Models.Car;
 import Models.Model;
 import Models.Order;
+import Models.Product;
+import Services.Screen;
 import Services.Utils;
 import Views.OrderView;
 
 import java.util.ArrayList;
 
 public class OrderController extends Controller {
-
+    Screen sc = new Screen();
     private ClientController customerController;
     private ProfessionalController professionalController;
     private BayController bayController;
     private CarController vehicleController;
+
+    private ProductController productController;
     private ArrayList<Order> orders = new ArrayList<>();
     private Order model;
     private OrderView view;
@@ -28,12 +32,14 @@ public class OrderController extends Controller {
             ClientController customerController
             , ProfessionalController professionalController
             , BayController bayController
-            , CarController carController
+            , CarController carController,
+              ProductController productController
     ) {
         this.customerController = customerController;
         this.professionalController = professionalController;
         this.bayController = bayController;
         this.vehicleController = carController;
+        this.productController = productController;
     }
 
     public void initializeMenu() {
