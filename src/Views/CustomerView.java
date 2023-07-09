@@ -98,9 +98,19 @@ public class CustomerView extends View{
 
             input.printCorrecto("Cliente encontrado: ");
             render.printTable(customer);
+            String confirmDelete = "";
+            while (!confirmDelete.equalsIgnoreCase("S") && !confirmDelete.equalsIgnoreCase("N")) {
+                confirmDelete = input.getString("¿Estás seguro de querer eliminar este profesional? (S/N): ");
 
-            this.controller.delete(code);
-
+                if (confirmDelete.equalsIgnoreCase("S")) {
+                    this.controller.delete(code);
+                    input.printCorrecto("Profesional eliminado correctamente");
+                } else if (confirmDelete.equalsIgnoreCase("N")) {
+                    input.printAlerta("Eliminación cancelada");
+                } else {
+                    input.printAlerta("Por favor solo ingresar S/N");
+                }
+            }
         } catch (Exception e) {
             input.printAlerta("Cliente no encontrado");
         }
