@@ -48,7 +48,7 @@ public class VehicleView extends View{
 
     @Override
     public void create(){
-        input.printTitulo(this.subTitle("Creación de Vehículo."));
+        input.printTitulo(this.subTitle("Creación de Vehículo"));
 
         Vehicle vehicle = this.controller.save(
                 this.inputLicensePlate(),
@@ -57,12 +57,11 @@ public class VehicleView extends View{
         );
 
         input.printCorrecto("Vehículo creado correctamente");
-        input.print(this.toString(vehicle));
-    }
+        render.printTable(vehicle);    }
 
     @Override
     public void index() {
-        input.printTitulo(this.subTitle("Listado de Vehículos."));
+        input.printTitulo(this.subTitle("Listado de Vehículos"));
         if (this.controller.getVehicles().size() == 0) {
             input.printAlerta("No hay autos en la lista");
         } else {
@@ -72,7 +71,7 @@ public class VehicleView extends View{
 
     @Override
     public void update() {
-        input.printTitulo(this.subTitle("Gestión del Vehículo."));
+        input.printTitulo(this.subTitle("Gestión del Vehículo"));
         int code = input.getInt("Ingrese el código: ");
 
         int index = this.controller.getById(code);
@@ -80,7 +79,7 @@ public class VehicleView extends View{
             Vehicle vehicle = this.controller.getByIndex(index);
 
             input.printCorrecto("Vehículo encontrado:");
-            input.print(this.toString(vehicle));
+            render.printTable(vehicle);
 
             vehicle.setLicensePlate(this.inputLicensePlate());
             vehicle.setBrand(this.inputBrand());
@@ -101,9 +100,21 @@ public class VehicleView extends View{
             Vehicle vehicle = (Vehicle) this.controller.get(code);
 
             input.printCorrecto("Vehículo encontrado: ");
-            input.print(this.toString(vehicle));
+            render.printTable(vehicle);
 
-            this.controller.delete(code);
+            String confirmDelete = "";
+            while (!confirmDelete.equalsIgnoreCase("S") && !confirmDelete.equalsIgnoreCase("N")) {
+                confirmDelete = input.getString("¿Estás seguro de querer eliminar este vehiculo? (S/N): ");
+
+                if (confirmDelete.equalsIgnoreCase("S")) {
+                    this.controller.delete(code);
+                    input.printCorrecto("Vehículo eliminado correctamente");
+                } else if (confirmDelete.equalsIgnoreCase("N")) {
+                    input.printAlerta("Eliminación cancelada");
+                } else {
+                    input.printAlerta("Por favor solo ingresar S/N");
+                }
+            }
 
         } catch (Exception e) {
             input.printAlerta("Vehículo no encontrado");

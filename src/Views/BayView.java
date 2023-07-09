@@ -20,7 +20,7 @@ public class BayView extends View{
             input.printSubtitulo("2. Listar");
             input.printSubtitulo("3. Actualizar");
             input.printSubtitulo("4. Eliminar");
-            input.printSubtitulo("5. Salir");
+            input.printSubtitulo("0. Salir");
             this.subMenuOption = input.getInt("   Ingrese una opción: ");
 
             switch (this.subMenuOption) {
@@ -47,7 +47,7 @@ public class BayView extends View{
 
     @Override
     public void create(){
-        input.printTitulo(this.subTitle("Creación de Bahia."));
+        input.printTitulo(this.subTitle("Creación de Bahia"));
 
         Bay bay = this.controller.save(
                 this.inputName(),
@@ -60,7 +60,7 @@ public class BayView extends View{
 
     @Override
     public void index() {
-        input.printTitulo(this.subTitle("Listado de Bahias."));
+        input.printTitulo(this.subTitle("Listado de Bahias"));
         if (this.controller.getBays().size() == 0) {
             input.printAlerta("No hay bahias en la lista");
         } else {
@@ -70,7 +70,7 @@ public class BayView extends View{
 
     @Override
     public void update() {
-        input.printTitulo(this.subTitle("Gestión de Bahia."));
+        input.printTitulo(this.subTitle("Gestión de Bahia"));
         int code = input.getInt("Ingrese el código: ");
 
         int index = this.controller.getById(code);
@@ -100,10 +100,21 @@ public class BayView extends View{
             input.printCorrecto("Bahia encontrada: ");
             render.printTable(bay);
 
-            this.controller.delete(code);
+            String confirmDelete = "";
+            while (!confirmDelete.equalsIgnoreCase("S") && !confirmDelete.equalsIgnoreCase("N")) {
+                confirmDelete = input.getString("¿Estás seguro de querer eliminar esta bahia? (S/N): ");
 
+                if (confirmDelete.equalsIgnoreCase("S")) {
+                    this.controller.delete(code);
+                    input.printCorrecto("Bahia eliminada correctamente");
+                } else if (confirmDelete.equalsIgnoreCase("N")) {
+                    input.printAlerta("Eliminación cancelada");
+                } else {
+                    input.printAlerta("Por favor solo ingresar S/N");
+                }
+            }
         } catch (Exception e) {
-            input.printAlerta("Bahia no encontrado");
+            input.printAlerta("Bahia no encontrada");
         }
     }
 

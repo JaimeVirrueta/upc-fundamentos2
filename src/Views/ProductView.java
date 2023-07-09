@@ -47,7 +47,7 @@ public class ProductView extends View{
 
     @Override
     public void create(){
-        input.printTitulo(this.subTitle("Creación de Producto."));
+        input.printTitulo(this.subTitle("Creación de Producto"));
 
         Product product = this.controller.save(
                 this.inputName(),
@@ -57,12 +57,12 @@ public class ProductView extends View{
         );
 
         input.printCorrecto("Producto creado correctamente");
-        input.print(this.toString(product));
+        render.printTable(product);
     }
 
     @Override
     public void index() {
-        input.printTitulo(this.subTitle("Listado de Productos."));
+        input.printTitulo(this.subTitle("Listado de Productos"));
         if (this.controller.getProducts().size() == 0) {
             input.printAlerta("No hay productos en la lista");
         } else {
@@ -72,7 +72,7 @@ public class ProductView extends View{
 
     @Override
     public void update() {
-        input.printTitulo(this.subTitle("Gestión del Producto."));
+        input.printTitulo(this.subTitle("Gestión del Producto"));
         int code = input.getInt("Ingrese el código: ");
 
         int index = this.controller.getById(code);
@@ -104,7 +104,19 @@ public class ProductView extends View{
             input.printCorrecto("Producto encontrado:");
             render.printTable(product);
 
-            this.controller.delete(code);
+            String confirmDelete = "";
+            while (!confirmDelete.equalsIgnoreCase("S") && !confirmDelete.equalsIgnoreCase("N")) {
+                confirmDelete = input.getString("¿Estás seguro de querer eliminar este producto? (S/N): ");
+
+                if (confirmDelete.equalsIgnoreCase("S")) {
+                    this.controller.delete(code);
+                    input.printCorrecto("Producto eliminado correctamente");
+                } else if (confirmDelete.equalsIgnoreCase("N")) {
+                    input.printAlerta("Eliminación cancelada");
+                } else {
+                    input.printAlerta("Por favor solo ingresar S/N");
+                }
+            }
 
         } catch (Exception e) {
             input.printAlerta("Producto no encontrado");

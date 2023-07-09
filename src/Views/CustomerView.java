@@ -48,7 +48,7 @@ public class CustomerView extends View{
 
     @Override
     public void create(){
-        input.printTitulo(this.subTitle("Creación de Cliente."));
+        input.printTitulo(this.subTitle("Creación de Cliente"));
 
         Customer customer = this.controller.save(
                 this.inputName(),
@@ -70,7 +70,7 @@ public class CustomerView extends View{
 
     @Override
     public void update() {
-        input.printTitulo(this.subTitle("Gestión del Cliente."));
+        input.printTitulo(this.subTitle("Gestión del Cliente"));
         int code = input.getInt("Ingrese el código: ");
 
         int index = this.controller.getById(code);
@@ -99,8 +99,19 @@ public class CustomerView extends View{
             input.printCorrecto("Cliente encontrado: ");
             render.printTable(customer);
 
-            this.controller.delete(code);
+            String confirmDelete = "";
+            while (!confirmDelete.equalsIgnoreCase("S") && !confirmDelete.equalsIgnoreCase("N")) {
+                confirmDelete = input.getString("¿Estás seguro de querer eliminar este cliente? (S/N): ");
 
+                if (confirmDelete.equalsIgnoreCase("S")) {
+                    this.controller.delete(code);
+                    input.printCorrecto("Cliente eliminado correctamente");
+                } else if (confirmDelete.equalsIgnoreCase("N")) {
+                    input.printAlerta("Eliminación cancelada");
+                } else {
+                    input.printAlerta("Por favor solo ingresar S/N");
+                }
+            }
         } catch (Exception e) {
             input.printAlerta("Cliente no encontrado");
         }
