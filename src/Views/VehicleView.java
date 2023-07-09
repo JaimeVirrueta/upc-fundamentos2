@@ -48,7 +48,7 @@ public class VehicleView extends View{
 
     @Override
     public void create(){
-        input.printTitulo(this.subTitle("Creación de Vehículo."));
+        input.printTitulo(this.subTitle("Creación de Vehículo"));
 
         Vehicle vehicle = this.controller.save(
                 this.inputLicensePlate(),
@@ -61,7 +61,7 @@ public class VehicleView extends View{
 
     @Override
     public void index() {
-        input.printTitulo(this.subTitle("Listado de Vehículos."));
+        input.printTitulo(this.subTitle("Listado de Vehículos"));
         if (this.controller.getVehicles().size() == 0) {
             input.printAlerta("No hay autos en la lista");
         } else {
@@ -71,7 +71,7 @@ public class VehicleView extends View{
 
     @Override
     public void update() {
-        input.printTitulo(this.subTitle("Gestión del Vehículo."));
+        input.printTitulo(this.subTitle("Gestión del Vehículo"));
         int code = input.getInt("Ingrese el código: ");
 
         int index = this.controller.getById(code);

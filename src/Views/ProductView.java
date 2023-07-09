@@ -47,7 +47,7 @@ public class ProductView extends View{
 
     @Override
     public void create(){
-        input.printTitulo(this.subTitle("Creación de Producto."));
+        input.printTitulo(this.subTitle("Creación de Producto"));
 
         Product product = this.controller.save(
                 this.inputName(),
@@ -62,7 +62,7 @@ public class ProductView extends View{
 
     @Override
     public void index() {
-        input.printTitulo(this.subTitle("Listado de Productos."));
+        input.printTitulo(this.subTitle("Listado de Productos"));
         if (this.controller.getProducts().size() == 0) {
             input.printAlerta("No hay productos en la lista");
         } else {
@@ -72,7 +72,7 @@ public class ProductView extends View{
 
     @Override
     public void update() {
-        input.printTitulo(this.subTitle("Gestión del Producto."));
+        input.printTitulo(this.subTitle("Gestión del Producto"));
         int code = input.getInt("Ingrese el código: ");
 
         int index = this.controller.getById(code);

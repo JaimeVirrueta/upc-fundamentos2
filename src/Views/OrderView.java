@@ -26,7 +26,7 @@ public class OrderView extends View{
     public void initializeMenu() {
         boolean salir = false;
         while (!salir) {
-            input.printTitulo("Opcion " + this.menuOption + " : Gestión de órdenes de Trabajo.");
+            input.printTitulo("Opcion " + this.menuOption + " : Gestión de órdenes de Trabajo");
             input.printSubtitulo("1. Crear");
             input.printSubtitulo("2. Listar");
             input.printSubtitulo("3. Gestionar productos de OT");
@@ -70,7 +70,7 @@ public class OrderView extends View{
 
     @Override
     public void create(){
-        input.printTitulo(this.subTitle("Creación de Orden de Trabajo."));
+        input.printTitulo(this.subTitle("Creación de Orden de Trabajo"));
 
         Order order = new Order();
         order.setName(this.inputName());
@@ -82,7 +82,7 @@ public class OrderView extends View{
         order.setProfessionalId(this.inputProfessional());
         order = this.controller.save(order);
 
-        input.printCorrecto("OT creada correctamente.");
+        input.printCorrecto("OT creada correctamente");
         render.printTable(order);
     }
 
@@ -90,7 +90,7 @@ public class OrderView extends View{
     public void index() {
         input.printTitulo(this.subTitle("Listado de Órdenes de Trabajo"));
         if (this.controller.getOrders().isEmpty()) {
-            input.printAlerta("No hay Órdenes de trabajo registradas.");
+            input.printAlerta("No hay Órdenes de trabajo registradas");
         } else {
             for (Order order : this.controller.getOrders()) {
                 input.print(this.toString(order));
@@ -100,7 +100,7 @@ public class OrderView extends View{
 
     @Override
     public void update() {
-        input.printTitulo(this.subTitle("Actualización de Orden de Trabajo."));
+        input.printTitulo(this.subTitle("Actualización de Orden de Trabajo"));
         int code = input.getInt("Ingrese el código: ");
 
         int index = this.controller.getById(code);
@@ -113,9 +113,9 @@ public class OrderView extends View{
             order.setBayId(this.inputBay());
             order.setProfessionalId(this.inputProfessional());
 
-            input.printCorrecto("OT actualizada correctamente.");
+            input.printCorrecto("OT actualizada correctamente");
         } else {
-            input.printAlerta("OT no encontrada.");
+            input.printAlerta("OT no encontrada");
         }
     }
 
@@ -150,7 +150,7 @@ public class OrderView extends View{
             this.controller.delete(code);
 
         } catch (Exception e) {
-            input.printAlerta("Orden de trabajo no encontrada.");
+            input.printAlerta("Orden de trabajo no encontrada");
         }
     }
 
@@ -220,7 +220,7 @@ public class OrderView extends View{
         customerId = this.controller.getCustomer(customerId);
 
         if (customerId == -1) {
-            input.printAlerta("El ID del cliente es incorrecto.");
+            input.printAlerta("El ID del cliente es incorrecto");
             this.inputCustomer();
         }
 
@@ -244,7 +244,7 @@ public class OrderView extends View{
         professionalId = this.controller.getProfessional(professionalId);
 
         if (professionalId == -1) {
-            input.printAlerta("El ID del profesional asignado es incorrecto.");
+            input.printAlerta("El ID del profesional asignado es incorrecto");
             this.inputProfessional();
         }
 
@@ -286,9 +286,9 @@ public class OrderView extends View{
 
             order.addProduct(product);
 
-            input.printCorrecto("Producto agregado a la orden correctamente.");
+            input.printCorrecto("Producto agregado a la orden correctamente");
         } else {
-            input.printAlerta("Producto no encontrado.");
+            input.printAlerta("Producto no encontrado");
         }
     }
 
@@ -301,9 +301,9 @@ public class OrderView extends View{
 
             order.removeProduct(product);
 
-            input.printCorrecto("Producto eliminado de la orden correctamente.");
+            input.printCorrecto("Producto eliminado de la orden correctamente");
         } else {
-            input.printAlerta("Producto no encontrado.");
+            input.printAlerta("Producto no encontrado");
         }
     }
 
@@ -336,7 +336,7 @@ public class OrderView extends View{
                 }
             }
         } else {
-            input.printAlerta("Orden de trabajo no encontrada.");
+            input.printAlerta("Orden de trabajo no encontrada");
         }
     }
 
@@ -362,9 +362,9 @@ public class OrderView extends View{
 
             order.addProfessional(professional);
 
-            input.printCorrecto("profesional agregado a la orden correctamente.");
+            input.printCorrecto("profesional agregado a la orden correctamente");
         } else {
-            input.printAlerta("profesional no encontrado.");
+            input.printAlerta("profesional no encontrado");
         }
     }
 
@@ -377,9 +377,9 @@ public class OrderView extends View{
 
             order.removeProfessional(professional);
 
-            input.printCorrecto("profesional eliminado de la orden correctamente.");
+            input.printCorrecto("profesional eliminado de la orden correctamente");
         } else {
-            input.printAlerta("profesional no encontrado.");
+            input.printAlerta("profesional no encontrado");
         }
     }
 
@@ -412,7 +412,7 @@ public class OrderView extends View{
                 }
             }
         } else {
-            input.printAlerta("Orden de trabajo no encontrada.");
+            input.printAlerta("Orden de trabajo no encontrada");
         }
     }
 
@@ -451,7 +451,7 @@ public class OrderView extends View{
                         .append(super.input.getVerde(", Nombre: ")).append(professional.getName());
             }
         } else {
-            sb.append("\n              No hay profesionales en esta orden.");
+            sb.append("\n              No hay profesionales en esta orden");
         }
 
         ArrayList<Product> products = order.getProducts();
@@ -462,7 +462,7 @@ public class OrderView extends View{
                         .append(super.input.getVerde(", Nombre: ")).append(product.getName());
             }
         } else {
-            sb.append("\n              No hay productos en esta orden.");
+            sb.append("\n              No hay productos en esta orden");
         }
         return sb.toString();
     }

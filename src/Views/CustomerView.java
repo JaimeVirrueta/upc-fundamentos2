@@ -48,7 +48,7 @@ public class CustomerView extends View{
 
     @Override
     public void create(){
-        input.printTitulo(this.subTitle("Creación de Cliente."));
+        input.printTitulo(this.subTitle("Creación de Cliente"));
 
         Customer customer = this.controller.save(
                 this.inputName(),
@@ -70,7 +70,7 @@ public class CustomerView extends View{
 
     @Override
     public void update() {
-        input.printTitulo(this.subTitle("Gestión del Cliente."));
+        input.printTitulo(this.subTitle("Gestión del Cliente"));
         int code = input.getInt("Ingrese el código: ");
 
         int index = this.controller.getById(code);

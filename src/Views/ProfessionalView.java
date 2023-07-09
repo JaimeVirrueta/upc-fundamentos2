@@ -47,22 +47,22 @@ public class ProfessionalView extends View{
 
     @Override
     public void create(){
-        input.printTitulo(this.subTitle("Creación de Profesional."));
+        input.printTitulo(this.subTitle("Creación de Profesional"));
 
         Professional professional = this.controller.save(
                 this.inputName(),
                 this.inputProfession()
         );
 
-        input.printCorrecto("Profesional creado correctamente.");
+        input.printCorrecto("Profesional creado correctamente");
         render.printTable(professional);
     }
 
     @Override
     public void index() {
-        input.printTitulo(this.subTitle("Listado de Profesionales."));
+        input.printTitulo(this.subTitle("Listado de Profesionales"));
         if (this.controller.getProfessionals().size() == 0) {
-            input.printAlerta("No hay profesionales registrados.");
+            input.printAlerta("No hay profesionales registrados");
         } else {
             render.printTable(this.controller.getProfessionals(), this.controller);
         }
@@ -100,8 +100,19 @@ public class ProfessionalView extends View{
             input.printCorrecto("Profesional encontrado:");
             render.printTable(professional);
 
-            this.controller.delete(code);
+            String confirmDelete = "";
+            while (!confirmDelete.equalsIgnoreCase("S") && !confirmDelete.equalsIgnoreCase("N")) {
+                confirmDelete = input.getString("¿Estás seguro de querer eliminar este profesional? (S/N): ");
 
+                if (confirmDelete.equalsIgnoreCase("S")) {
+                    this.controller.delete(code);
+                    input.printCorrecto("Profesional eliminado correctamente");
+                } else if (confirmDelete.equalsIgnoreCase("N")) {
+                    input.printAlerta("Eliminación cancelada");
+                } else {
+                    input.printAlerta("Por favor solo ingresar S/N");
+                }
+            }
         } catch (Exception e) {
             input.printAlerta("Profesional no encontrado.");
         }
