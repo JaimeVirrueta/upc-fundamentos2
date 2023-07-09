@@ -102,7 +102,19 @@ public class VehicleView extends View{
             input.printCorrecto("Vehículo encontrado: ");
             render.printTable(vehicle);
 
-            this.controller.delete(code);
+            String confirmDelete = "";
+            while (!confirmDelete.equalsIgnoreCase("S") && !confirmDelete.equalsIgnoreCase("N")) {
+                confirmDelete = input.getString("¿Estás seguro de querer eliminar este vehiculo? (S/N): ");
+
+                if (confirmDelete.equalsIgnoreCase("S")) {
+                    this.controller.delete(code);
+                    input.printCorrecto("Vehículo eliminado correctamente");
+                } else if (confirmDelete.equalsIgnoreCase("N")) {
+                    input.printAlerta("Eliminación cancelada");
+                } else {
+                    input.printAlerta("Por favor solo ingresar S/N");
+                }
+            }
 
         } catch (Exception e) {
             input.printAlerta("Vehículo no encontrado");
