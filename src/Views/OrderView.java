@@ -7,11 +7,15 @@ import Models.Model;
 import Models.Order;
 import Models.Product;
 import Models.Professional;
+import Render.OrderRender;
+
 import java.util.ArrayList;
 
 public class OrderView extends View{
 
     private OrderController controller;
+
+    private OrderRender render;
 
     private ProductController productController;
 
@@ -19,6 +23,7 @@ public class OrderView extends View{
 
     public void setController(OrderController controller) {
         this.controller = controller;
+        this.render = new OrderRender(controller);
         this.menuOption = 1;
     }
 
@@ -92,9 +97,7 @@ public class OrderView extends View{
         if (this.controller.getOrders().isEmpty()) {
             input.printAlerta("No hay Órdenes de trabajo registradas");
         } else {
-            for (Order order : this.controller.getOrders()) {
-                input.print(this.toString(order));
-            }
+            render.printTable(this.controller.getOrders());
         }
     }
 
@@ -108,7 +111,7 @@ public class OrderView extends View{
             Order order = this.controller.getByIndex(index);
 
             input.printCorrecto("OT encontrada:");
-            //render.printTable(order);
+            render.printTable(order);
 
             order.setBayId(this.inputBay());
             order.setProfessionalId(this.inputProfessional());
@@ -126,10 +129,9 @@ public class OrderView extends View{
         try {
             Order order = (Order) this.controller.get(code);
 
-            input.printCorrecto("OT encontrada:");
-            input.print(this.toString(order));
-
+            input.printCorrecto("OT encontrada y cerrada:");
             this.controller.closeOrder(order);
+            render.printTable(order);
 
         } catch (Exception e) {
             input.printAlerta("Producto no encontrado");
@@ -145,7 +147,7 @@ public class OrderView extends View{
             Order order = (Order) this.controller.get(code);
 
             input.printCorrecto("Orden de trabajo encontrada:");
-           // render.printTable(order);
+            render.printTable(order);
 
             String confirmDelete = "";
             while (!confirmDelete.equalsIgnoreCase("S") && !confirmDelete.equalsIgnoreCase("N")) {
@@ -165,9 +167,6 @@ public class OrderView extends View{
             input.printAlerta("Orden de trabajo no encontrada");
         }
     }
-
-
-
 
     /**
      * Entrada de datos

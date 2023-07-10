@@ -40,6 +40,7 @@ public class ProductRender extends Render {
         String name = product.getName();
         double price = product.getPrice();
         String stock = product.getStock() + "";
+
         sc.print(String.format(format(), id, sku, name, price, stock ));
     }
 
