@@ -15,7 +15,7 @@ public class Bay extends Model {
     }
 
     public void setLocal(String local) {
-        this.local = local;
+        this.local = local == "" ? this.local :local;
     }
 
 }

@@ -91,8 +91,10 @@ public class OrderView extends View{
         order.setProfessionalId(this.inputProfessional());
         order = this.controller.save(order);
 
+        order.addProfessional((Professional) this.professionalController.get(order.getProfessionalId()));
+
         input.printCorrecto("OT creada correctamente");
-        //render.printTable(order);
+        render.printTable(order);
     }
 
     @Override
@@ -132,6 +134,9 @@ public class OrderView extends View{
 
             order.setBayId(this.inputBay());
             order.setProfessionalId(this.inputProfessional());
+
+            input.printCorrecto("Resultado:");
+            render.printTable(order);
 
             input.printCorrecto("OT actualizada correctamente");
         } else {
@@ -306,6 +311,7 @@ public class OrderView extends View{
 
         if (index != -1) {
             Order order = controller.getByIndex(index);
+            render.printTableDetail(order);
             boolean salir = false;
             while (!salir) {
                 input.printTitulo("Gestión de Profesionales de la Orden de Trabajo");
@@ -343,6 +349,7 @@ public class OrderView extends View{
             order.addProfessional(professional);
 
             input.printCorrecto("profesional agregado a la orden correctamente");
+            render.printTableDetail(order);
         } else {
             input.printAlerta("profesional no encontrado");
         }
@@ -358,6 +365,7 @@ public class OrderView extends View{
             order.removeProfessional(professional);
 
             input.printCorrecto("profesional eliminado de la orden correctamente");
+            render.printTableDetail(order);
         } else {
             input.printAlerta("profesional no encontrado");
         }
@@ -390,6 +398,7 @@ public class OrderView extends View{
 
         if (index != -1) {
             Order order = controller.getByIndex(index);
+            render.printTableDetail(order);
             boolean salir = false;
             while (!salir) {
                 input.printTitulo("Gestión de Productos de la Orden de Trabajo");
@@ -426,6 +435,7 @@ public class OrderView extends View{
             Product product = productController.getByIndex(index);
             order.addProduct(product);
             input.printCorrecto("Producto agregado a la orden correctamente");
+            render.printTableDetail(order);
         } else {
             input.printAlerta("Producto no encontrado");
         }
@@ -441,6 +451,7 @@ public class OrderView extends View{
             order.removeProduct(product);
 
             input.printCorrecto("Producto eliminado de la orden correctamente");
+            render.printTableDetail(order);
         } else {
             input.printAlerta("Producto no encontrado");
         }

@@ -86,6 +86,9 @@ public class CustomerView extends View{
             customer.setName(this.inputName());
             customer.setPhone(this.inputPhone());
 
+            input.printCorrecto("Resultado:");
+            render.printTable(customer);
+
             input.printCorrecto("Cliente actualizado correctamente");
         } else {
             input.printAlerta("Cliente no encontrado");

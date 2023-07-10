@@ -89,6 +89,9 @@ public class ProductView extends View {
             product.setPrice(this.inputPrice());
             product.setStock(this.inputStock());
 
+            input.printCorrecto("Resultado:");
+            render.printTable(product);
+
             input.printCorrecto("Producto actualizado correctamente");
         } else {
             input.printAlerta("Producto no encontrado");

@@ -25,7 +25,7 @@ public class BayRender extends Render {
 
     public void printTable(Bay bay) {
         sizeName = Math.max(bay.getName().length(), 6);
-        sizeLocal = Math.max(bay.getName().length(), 5);
+        sizeLocal = Math.max(bay.getLocal().length(), 5);
 
         this.line();
         this.header();

@@ -17,7 +17,7 @@ public class Product extends Model {
     }
 
     public String getSku() {
-        return sku;
+        return this.sku = sku == "" ? this.sku :sku;
     }
 
     public void setSku(String sku) {

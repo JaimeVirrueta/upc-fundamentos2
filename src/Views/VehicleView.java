@@ -88,6 +88,9 @@ public class VehicleView extends View{
             vehicle.setBrand(this.inputBrand());
             vehicle.setModelCar(this.inputModel());
 
+            input.printCorrecto("Resultado:");
+            render.printTable(vehicle);
+
             input.printCorrecto("Vehículo actualizado correctamente");
         } else {
             input.printAlerta("Vehículo no encontrado");

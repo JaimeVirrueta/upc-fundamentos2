@@ -41,12 +41,12 @@ public class Main {
 
         while (!salir) {
             sc.printTitulo("Menú Principal");
-            sc.printSubtitulo("1. Gestión de Órdenes");;
-            sc.printSubtitulo("2. Gestión de Productos");
-            sc.printSubtitulo("3. Gestión de Profesionales");
-            sc.printSubtitulo("4. Gestión de Bahias");
-            sc.printSubtitulo("5. Gestión de Clientes");
-            sc.printSubtitulo("6. Gestión de Autos");
+            sc.printSubtitulo("1. Gestión de Órdenes (" + orderController.modelSize() + ")");
+            sc.printSubtitulo("2. Gestión de Productos (" + productController.modelSize() + ")");
+            sc.printSubtitulo("3. Gestión de Profesionales (" + professionalController.modelSize() + ")");
+            sc.printSubtitulo("4. Gestión de Bahias (" + bayController.modelSize() + ")");
+            sc.printSubtitulo("5. Gestión de Clientes (" + customerController.modelSize() + ")");
+            sc.printSubtitulo("6. Gestión de Autos (" + vehicleController.modelSize() + ")");
             sc.printSubtitulo("7. Salir");
             int opcion = sc.getInt("   Ingrese una opción: ");
 

@@ -87,6 +87,9 @@ public class BayView extends View{
             bay.setName(this.inputName());
             bay.setLocal(this.getLocal());
 
+            input.printCorrecto("Resultado:");
+            render.printTable(bay);
+
             input.printCorrecto("Bahia actualizado correctamente");
         } else {
             input.printAlerta("Bahia no encontrada");

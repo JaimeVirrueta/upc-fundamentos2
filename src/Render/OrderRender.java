@@ -20,7 +20,7 @@ public class OrderRender extends Render {
 
     public void printTable(ArrayList<Order> orders) {
         sizeName = Math.max(this.sizeName(orders), 6);
-        sizeCustomer = Math.max(this.sizeCustomer(orders), 6);
+        sizeCustomer = Math.max(this.sizeCustomer(orders), 8);
         sizeVehicle = Math.max(this.sizeVehicle(orders), 8);
         sizeBay = Math.max(this.sizeBay(orders), 5);
         sizeProfessional = Math.max(sizeProfessional(orders), 11);
@@ -39,7 +39,7 @@ public class OrderRender extends Render {
 
     public void printTable(Order order) {
         sizeName = Math.max(order.getName().length(), 6);
-        sizeCustomer = Math.max(this.controller.getCustomer(order).length(), 6);
+        sizeCustomer = Math.max(this.controller.getCustomer(order).length(), 8);
         sizeVehicle = Math.max(this.controller.getVehicle(order).length(), 8);
         sizeBay = Math.max(this.controller.getBay(order).length(), 5);
         sizeProfessional = Math.max(this.controller.getProfessional(order).length(), 11);

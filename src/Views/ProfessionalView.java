@@ -85,6 +85,9 @@ public class ProfessionalView extends View{
             professional.setName(this.inputName());
             professional.setProfession(this.inputProfession());
 
+            input.printCorrecto("Resultado:");
+            render.printTable(professional);
+
             input.printCorrecto("Profesional actualizado correctamente");
         } else {
             input.printAlerta("Profesional no encontrado");
