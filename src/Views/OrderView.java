@@ -289,126 +289,15 @@ public class OrderView extends View{
 
         return bay;
     }
-    
-    /**
-     * ------------------------------------
-     */
 
+
+    /**
+     * =============================================================================================
+     * Gestión de Profesionales asignados a la ORden de trabajo
+     */
 
     public void setProfessionalController(ProfessionalController professionalController) {
         this.professionalController = professionalController;
-    }
-
-    public void setProductController(ProductController productController) {
-        this.productController = productController;
-    }
-
-
-    // Metodos add, remove, manage, getIndex de Productos
-    public void addProduct(Order order) {
-        int codigo = input.getInt("Ingrese el código del producto a agregar: ");
-        int index = productController.getById(codigo);
-
-        if (index != -1) {
-            Product product = productController.getByIndex(index);
-
-            order.addProduct(product);
-
-            input.printCorrecto("Producto agregado a la orden correctamente");
-        } else {
-            input.printAlerta("Producto no encontrado");
-        }
-    }
-
-    public void removeProduct(Order order) {
-        int codigo = input.getInt("Ingrese el código del producto a eliminar: ");
-        int index = getProductIndex(order, codigo);
-
-        if (index != -1) {
-            Product product = order.getProducts().get(index);
-
-            order.removeProduct(product);
-
-            input.printCorrecto("Producto eliminado de la orden correctamente");
-        } else {
-            input.printAlerta("Producto no encontrado");
-        }
-    }
-
-    public void manageProducts() {
-        int codigo = input.getInt("Ingrese el código de la orden de trabajo: ");
-        int index = controller.getById(codigo);
-
-        if (index != -1) {
-            Order order = controller.getByIndex(index);
-            boolean salir = false;
-            while (!salir) {
-                input.printTitulo("Gestión de Productos de la Orden de Trabajo");
-                input.printSubtitulo("1. Agregar producto");
-                input.printSubtitulo("2. Eliminar producto");
-                input.printSubtitulo("3. Volver");
-                int opcion = input.getInt("Ingrese una opción: ");
-
-                switch (opcion) {
-                    case 1:
-                        addProduct(order);
-                        break;
-                    case 2:
-                        removeProduct(order);
-                        break;
-                    case 3:
-                        salir = true;
-                        break;
-                    default:
-                        input.printAlerta("Opción inválida");
-                }
-            }
-        } else {
-            input.printAlerta("Orden de trabajo no encontrada");
-        }
-    }
-
-    private int getProductIndex(Order order, int codigo) {
-        for (int i = 0; i < order.getProducts().size(); i++) {
-            Product product = order.getProducts().get(i);
-            if (product.getId() == codigo) {
-                return i;
-            }
-        }
-
-        return -1;
-    }
-
-    // Metodos add, remove, manage, getIndex de Profesionales
-
-    public void addProfessional(Order order) {
-        int codigo = input.getInt("Ingrese el código del profesional a agregar: ");
-        int index = professionalController.getById(codigo);
-
-        if (index != -1) {
-            Professional professional = professionalController.getByIndex(index);
-
-            order.addProfessional(professional);
-
-            input.printCorrecto("profesional agregado a la orden correctamente");
-        } else {
-            input.printAlerta("profesional no encontrado");
-        }
-    }
-
-    public void removeProfessional(Order order) {
-        int codigo = input.getInt("Ingrese el código del profesional a eliminar: ");
-        int index = getProfessionalIndex(order, codigo);
-
-        if (index != -1) {
-            Professional professional = order.getProfessionals().get(index);
-
-            order.removeProfessional(professional);
-
-            input.printCorrecto("profesional eliminado de la orden correctamente");
-        } else {
-            input.printAlerta("profesional no encontrado");
-        }
     }
 
     public void manageProfessionals() {
@@ -444,6 +333,36 @@ public class OrderView extends View{
         }
     }
 
+    public void addProfessional(Order order) {
+        int codigo = input.getInt("Ingrese el código del profesional a agregar: ");
+        int index = professionalController.getById(codigo);
+
+        if (index != -1) {
+            Professional professional = professionalController.getByIndex(index);
+
+            order.addProfessional(professional);
+
+            input.printCorrecto("profesional agregado a la orden correctamente");
+        } else {
+            input.printAlerta("profesional no encontrado");
+        }
+    }
+
+    public void removeProfessional(Order order) {
+        int codigo = input.getInt("Ingrese el código del profesional a eliminar: ");
+        int index = getProfessionalIndex(order, codigo);
+
+        if (index != -1) {
+            Professional professional = order.getProfessionals().get(index);
+
+            order.removeProfessional(professional);
+
+            input.printCorrecto("profesional eliminado de la orden correctamente");
+        } else {
+            input.printAlerta("profesional no encontrado");
+        }
+    }
+
     private int getProfessionalIndex(Order order, int codigo) {
         for (int i = 0; i < order.getProfessionals().size(); i++) {
             Professional professional = order.getProfessionals().get(i);
@@ -456,42 +375,87 @@ public class OrderView extends View{
     }
 
 
+    /**
+     * =============================================================================================
+     * Gestión de Productos usados en la Orden de trabajo
+     */
 
-    public String toString(Model model) {
-        Order order = (Order) model;
-
-        StringBuilder sb = new StringBuilder();
-        sb.append(super.input.getVerde("Código: ")).append(order.getId())
-                .append(super.input.getVerde(", Orden: ")).append(order.getName())
-                .append(super.input.getVerde(", Tipo: ")).append(order.getOrderType())
-                .append(super.input.getVerde(", Vehículo: ")).append(this.controller.getVehicle(order))
-                .append(super.input.getVerde("\n           Kilometraje: ")).append(order.getMileage())
-                .append(super.input.getVerde(", Cliente: ")).append(this.controller.getCustomer(order))
-                .append(super.input.getVerde(", Fecha de Inicio: ")).append(order.getStartDate())
-                .append(super.input.getVerde(", Fecha de Fin: ")).append(order.getEndDate())
-                .append(super.input.getVerde("\n           Profesional: ")).append(this.controller.getProfessional(order))
-                .append(super.input.getVerde(", Bahía: ")).append(this.controller.getBay(order));
-        ArrayList<Professional> professionals = order.getProfessionals();
-        if (!professionals.isEmpty()) {
-            sb.append(super.input.getVerde("\n           Profesionales:"));
-            for (Professional professional : professionals) {
-                sb.append("\n              ").append(super.input.getVerde("Código: ")).append(professional.getId())
-                        .append(super.input.getVerde(", Nombre: ")).append(professional.getName());
-            }
-        } else {
-            sb.append("\n              No hay profesionales en esta orden");
-        }
-
-        ArrayList<Product> products = order.getProducts();
-        if (!products.isEmpty()) {
-            sb.append(super.input.getVerde("\n           Productos:"));
-            for (Product product : products) {
-                sb.append("\n              ").append(super.input.getVerde("Código: ")).append(product.getId())
-                        .append(super.input.getVerde(", Nombre: ")).append(product.getName());
-            }
-        } else {
-            sb.append("\n              No hay productos en esta orden");
-        }
-        return sb.toString();
+    public void setProductController(ProductController productController) {
+        this.productController = productController;
     }
+
+    public void manageProducts() {
+        int codigo = input.getInt("Ingrese el código de la orden de trabajo: ");
+        int index = controller.getById(codigo);
+
+        if (index != -1) {
+            Order order = controller.getByIndex(index);
+            boolean salir = false;
+            while (!salir) {
+                input.printTitulo("Gestión de Productos de la Orden de Trabajo");
+                input.printSubtitulo("1. Agregar producto");
+                input.printSubtitulo("2. Eliminar producto");
+                input.printSubtitulo("3. Volver");
+                int opcion = input.getInt("Ingrese una opción: ");
+
+                switch (opcion) {
+                    case 1:
+                        addProduct(order);
+                        break;
+                    case 2:
+                        removeProduct(order);
+                        break;
+                    case 3:
+                        salir = true;
+                        break;
+                    default:
+                        input.printAlerta("Opción inválida");
+                }
+            }
+        } else {
+            input.printAlerta("Orden de trabajo no encontrada");
+        }
+    }
+
+    // Metodos add, remove, manage, getIndex de Productos
+    public void addProduct(Order order) {
+        int codigo = input.getInt("Ingrese el código del producto a agregar: ");
+        int index = productController.getById(codigo);
+
+        if (index != -1) {
+            Product product = productController.getByIndex(index);
+            order.addProduct(product);
+            input.printCorrecto("Producto agregado a la orden correctamente");
+        } else {
+            input.printAlerta("Producto no encontrado");
+        }
+    }
+
+    public void removeProduct(Order order) {
+        int codigo = input.getInt("Ingrese el código del producto a eliminar: ");
+        int index = getProductIndex(order, codigo);
+
+        if (index != -1) {
+            Product product = order.getProducts().get(index);
+
+            order.removeProduct(product);
+
+            input.printCorrecto("Producto eliminado de la orden correctamente");
+        } else {
+            input.printAlerta("Producto no encontrado");
+        }
+    }
+
+    private int getProductIndex(Order order, int codigo) {
+        for (int i = 0; i < order.getProducts().size(); i++) {
+            Product product = order.getProducts().get(i);
+            if (product.getId() == codigo) {
+                return i;
+            }
+        }
+
+        return -1;
+    }
+
+
 }
