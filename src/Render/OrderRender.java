@@ -53,6 +53,21 @@ public class OrderRender extends Render {
         this.line();
     }
 
+    public void printTableDetail(Order order) {
+        this.printTable(order);
+
+        sc.print("");
+        sc.printCorrecto("Profesionales Asignado");
+        ProfessionalRender professionalRender = new ProfessionalRender();
+        professionalRender.printTable(order.getProfessionals());
+
+        sc.print("");
+        sc.printCorrecto("Productos asociado");
+        ProductRender productRender = new ProductRender();
+        productRender.printTable(order.getProducts());
+
+    }
+
     private void content(Order order) {
         String vehicle = this.controller.getVehicle(order);
         String customer = this.controller.getCustomer(order);

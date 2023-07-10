@@ -49,6 +49,7 @@ public class VehicleController extends Controller{
 
     @Override
     public Vehicle getByIndex(int index) {
+
         return this.getVehicles().get(index);
     }
 

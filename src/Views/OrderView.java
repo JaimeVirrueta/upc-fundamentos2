@@ -34,11 +34,12 @@ public class OrderView extends View{
             input.printTitulo("Opcion " + this.menuOption + " : Gestión de órdenes de Trabajo");
             input.printSubtitulo("1. Crear");
             input.printSubtitulo("2. Listar");
-            input.printSubtitulo("3. Gestionar productos de OT");
-            input.printSubtitulo("4. Gestionar profesionales de OT");
-            input.printSubtitulo("5. Actualizar");
-            input.printSubtitulo("6. Finalizar OT");
-            input.printSubtitulo("7. Eliminar");
+            input.printSubtitulo("3. Visualizar");
+            input.printSubtitulo("4. Gestionar productos de OT");
+            input.printSubtitulo("5. Gestionar profesionales de OT");
+            input.printSubtitulo("6. Actualizar");
+            input.printSubtitulo("7. Finalizar OT");
+            input.printSubtitulo("8. Eliminar");
             input.printSubtitulo("0. Salir");
             this.subMenuOption = input.getInt("   Ingrese una opción: ");
 
@@ -50,18 +51,21 @@ public class OrderView extends View{
                     this.index();
                     break;
                 case 3:
-                    this.manageProducts();
+                    this.show();
                     break;
                 case 4:
-                    this.manageProfessionals();
+                    this.manageProducts();
                     break;
                 case 5:
-                    this.update();
+                    this.manageProfessionals();
                     break;
                 case 6:
-                    this.closeOrder();
+                    this.update();
                     break;
                 case 7:
+                    this.closeOrder();
+                    break;
+                case 8:
                     this.delete();
                     break;
                 case 0:
@@ -98,6 +102,19 @@ public class OrderView extends View{
             input.printAlerta("No hay Órdenes de trabajo registradas");
         } else {
             render.printTable(this.controller.getOrders());
+        }
+    }
+
+    public void show() {
+        input.printTitulo(this.subTitle("Visualización de Órden de Trabajo"));
+        int code = input.getInt("Ingrese el código: ");
+
+        int index = this.controller.getById(code);
+        if (index != -1) {
+            Order order = this.controller.getByIndex(index);
+            render.printTableDetail(order);
+        } else {
+            input.printAlerta("OT no encontrada");
         }
     }
 

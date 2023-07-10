@@ -2,6 +2,7 @@ package Controllers;
 
 import Models.Model;
 import Models.Order;
+import Models.Professional;
 import Services.Utils;
 import Views.OrderView;
 import java.util.ArrayList;
@@ -127,8 +128,30 @@ public class OrderController extends Controller {
     }
 
     public void initData() {
-        this.save(new Order(this.modelSize(), "Preventivo 10000km", 1, 1, 1, 1, "Preventivo", "2023-01-15 13:25", "2023-01-15 18:25", 9850));
-        this.save(new Order(this.modelSize(), "Correctivo Supension", 2, 3, 2, 2, "Correctivo", "2023-04-15 09:25", "2023-04-15 15:32", 67836));
+        Order ot1 = new Order(this.modelSize(), "Preventivo 10000km", 1, 1, 1, 1, "Preventivo", "2023-01-15 13:25", "2023-01-15 18:25", 9850);
+        orders.add(ot1);
+        ot1.addProfessional(this.professionalController.getByIndex(this.professionalController.getById(1)));
+        ot1.addProfessional(this.professionalController.getByIndex(this.professionalController.getById(3)));
+        ot1.addProduct(this.productController.getByIndex(this.productController.getById(1)));
+        ot1.addProduct(this.productController.getByIndex(this.productController.getById(2)));
+        ot1.addProduct(this.productController.getByIndex(this.productController.getById(3)));
+        ot1.addProduct(this.productController.getByIndex(this.productController.getById(4)));
+
+        Order ot2 = new Order(this.modelSize(), "Correctivo Supension", 2, 3, 2, 2, "Correctivo", "2023-04-15 09:25", "2023-04-15 15:32", 67836);
+        orders.add(ot2);
+        ot2.addProfessional(this.professionalController.getByIndex(this.professionalController.getById(2)));
+        ot2.addProduct(this.productController.getByIndex(this.productController.getById(1)));
+        ot2.addProduct(this.productController.getByIndex(this.productController.getById(2)));
+        ot2.addProduct(this.productController.getByIndex(this.productController.getById(3)));
+        ot2.addProduct(this.productController.getByIndex(this.productController.getById(4)));
+
+        Order ot3 = new Order(this.modelSize(), "Proventivo 25000km", 3, 2, 3, 3, "Preventivo", "2023-05-15 09:25", "2023-05-15 15:32", 679);
+        orders.add(ot3);
+        ot3.addProfessional(this.professionalController.getByIndex(this.professionalController.getById(4)));
+        ot3.addProduct(this.productController.getByIndex(this.productController.getById(1)));
+        ot3.addProduct(this.productController.getByIndex(this.productController.getById(2)));
+        ot3.addProduct(this.productController.getByIndex(this.productController.getById(3)));
+        ot3.addProduct(this.productController.getByIndex(this.productController.getById(4)));
     }
 
     public int getNameSize() {
