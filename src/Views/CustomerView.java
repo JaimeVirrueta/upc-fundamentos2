@@ -2,8 +2,11 @@ package Views;
 
 import Controllers.CustomerController;
 import Models.Customer;
+import Render.CustomerRender;
 
 public class CustomerView extends View{
+
+    private CustomerRender render = new CustomerRender();
 
     private CustomerController controller;
 
@@ -64,7 +67,7 @@ public class CustomerView extends View{
         if (this.controller.getCustomers().size() == 0) {
             input.printAlerta("No hay clientes registrados");
         } else {
-            render.printTable(this.controller.getCustomers(), this.controller);
+            render.printTable(this.controller.getCustomers());
         }
     }
 
@@ -88,6 +91,7 @@ public class CustomerView extends View{
             input.printAlerta("Cliente no encontrado");
         }
     }
+
     @Override
     public void delete() {
         input.printTitulo(this.subTitle("Eliminación de Cliente"));

@@ -2,8 +2,10 @@ package Views;
 
 import Controllers.ProfessionalController;
 import Models.Professional;
+import Render.ProfessionalRender;
 
 public class ProfessionalView extends View{
+    private ProfessionalRender render = new ProfessionalRender();
     private ProfessionalController controller;
 
     public void setController(ProfessionalController controller) {
@@ -64,7 +66,7 @@ public class ProfessionalView extends View{
         if (this.controller.getProfessionals().size() == 0) {
             input.printAlerta("No hay profesionales registrados");
         } else {
-            render.printTable(this.controller.getProfessionals(), this.controller);
+            render.printTable(this.controller.getProfessionals());
         }
     }
 

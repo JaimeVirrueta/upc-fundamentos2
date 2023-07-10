@@ -2,8 +2,10 @@ package Views;
 
 import Controllers.ProductController;
 import Models.Product;
+import Render.ProductRender;
 
-public class ProductView extends View{
+public class ProductView extends View {
+    private ProductRender render = new ProductRender();
     private ProductController controller;
 
     public void setController(ProductController controller) {
@@ -66,7 +68,7 @@ public class ProductView extends View{
         if (this.controller.getProducts().size() == 0) {
             input.printAlerta("No hay productos en la lista");
         } else {
-            render.printTable(this.controller.getProducts(), this.controller);
+            render.printTable(this.controller.getProducts());
         }
     }
 

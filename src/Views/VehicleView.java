@@ -2,8 +2,10 @@ package Views;
 
 import Controllers.VehicleController;
 import Models.Vehicle;
+import Render.VehicleRender;
 
 public class VehicleView extends View{
+    private VehicleRender render = new VehicleRender();
 
     private VehicleController controller;
 
@@ -57,7 +59,8 @@ public class VehicleView extends View{
         );
 
         input.printCorrecto("Vehículo creado correctamente");
-        render.printTable(vehicle);    }
+        render.printTable(vehicle);
+    }
 
     @Override
     public void index() {
@@ -65,7 +68,7 @@ public class VehicleView extends View{
         if (this.controller.getVehicles().size() == 0) {
             input.printAlerta("No hay autos en la lista");
         } else {
-            render.printTable(this.controller.getVehicles(), this.controller);
+            render.printTable(this.controller.getVehicles());
         }
     }
 

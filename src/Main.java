@@ -30,6 +30,7 @@ public class Main {
         orderView.setController(orderController);
         orderView.setProductController(productController);
         orderView.setProfessionalController(professionalController);
+
         Input sc = new Input();
 
         sc.printTitulo("Bienvenido al Gestor del Taller");

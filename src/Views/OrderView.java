@@ -83,7 +83,7 @@ public class OrderView extends View{
         order = this.controller.save(order);
 
         input.printCorrecto("OT creada correctamente");
-        render.printTable(order);
+        //render.printTable(order);
     }
 
     @Override
@@ -108,7 +108,7 @@ public class OrderView extends View{
             Order order = this.controller.getByIndex(index);
 
             input.printCorrecto("OT encontrada:");
-            render.printTable(order);
+            //render.printTable(order);
 
             order.setBayId(this.inputBay());
             order.setProfessionalId(this.inputProfessional());
@@ -145,7 +145,7 @@ public class OrderView extends View{
             Order order = (Order) this.controller.get(code);
 
             input.printCorrecto("Orden de trabajo encontrada:");
-            render.printTable(order);
+           // render.printTable(order);
 
             String confirmDelete = "";
             while (!confirmDelete.equalsIgnoreCase("S") && !confirmDelete.equalsIgnoreCase("N")) {

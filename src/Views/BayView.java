@@ -2,8 +2,12 @@ package Views;
 
 import Controllers.BayController;
 import Models.Bay;
+import Render.BayRender;
 
 public class BayView extends View{
+
+    private BayRender render = new BayRender();
+
     private BayController controller;
 
     public void setController(BayController controller) {
@@ -64,7 +68,7 @@ public class BayView extends View{
         if (this.controller.getBays().size() == 0) {
             input.printAlerta("No hay bahias en la lista");
         } else {
-            render.printTable(this.controller.getBays(), this.controller);
+            render.printTable(this.controller.getBays());
         }
     }
 
@@ -126,6 +130,10 @@ public class BayView extends View{
         return this.validateName(input.getString("Ingrese el nombre: "));
     }
 
+    public String getLocal() {
+        return this.input.getString("Ingrese el Local: ");
+    }
+
     /**
      * Validaciones
      */
@@ -143,9 +151,5 @@ public class BayView extends View{
         }
 
         return name;
-    }
-
-    public String getLocal() {
-        return this.input.getString("Ingrese el Local: ");
     }
 }

@@ -10,6 +10,10 @@ abstract public class Model {
         return this.id;
     }
 
+    public String getIdText() {
+        return this.id + "";
+    }
+
     public void setId(int nextId) {
         this.id = nextId + 1;
     }
